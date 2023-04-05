@@ -1,0 +1,25 @@
+### Create new user
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+    "email": "email1@email.com",
+    "password": "asdad"
+}
+
+
+### Login user
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "email": "email1@email.com",
+    "password": "asdad"
+}
+
+### Who am I
+GET http://localhost:3000/auth/whoami
+Cookie: express:sess=eyJ1c2VySWQiOjJ9
+
+### Sign Out
+GET http://localhost:3000/auth/signout
