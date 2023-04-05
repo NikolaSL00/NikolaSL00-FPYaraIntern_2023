@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+#request files
+.http
+
 # Logs
 logs
 /*.log
