@@ -1,25 +1,33 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { ProductType } from './dtos/enums/product-type.enum';
 
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   name: string;
 
-  @Column()
-  height: number;
+  @Column({
+    type: 'enum',
+    enum: ProductType,
+    default: ProductType.NORMAL,
+  })
+  type: ProductType;
 
-  @Column()
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  length: number;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   width: number;
 
-  @Column()
-  weight: number;
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  height: number;
 
-  @Column()
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  volume: number;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   price: number;
-
-  @Column()
-  isHazardous: boolean;
 }

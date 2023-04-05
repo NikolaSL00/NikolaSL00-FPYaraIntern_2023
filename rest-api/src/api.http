@@ -1,0 +1,2 @@
+###
+GET http://api.mathjs.org/v4/?expr=2*2*3&precision=2

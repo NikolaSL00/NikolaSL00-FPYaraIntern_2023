@@ -1,0 +1,19 @@
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+    "name":"1nice product",
+    "width": 15.70,
+    "height": 10.30,
+    "length": 20.0111,
+    "price": 100,
+    "type": "normal"
+}
+// name, width, height, length, price, type
+
+
+###
+GET http://localhost:3000/products
+
+###
+GET http://localhost:3000/products/3
