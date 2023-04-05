@@ -1,23 +1,38 @@
-import { useState } from 'react';
-import AuthForm from '../../components/AuthForm';
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 import { isValidEmail, isPasswordsMatching } from '../../helpers/validators';
+import AuthForm from '../../components/AuthForm';
+import { Context as AuthContext } from '../../context/AuthContext';
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
-  const onSubmit = (e) => {
+  const { state, signup, clearErrorMessage } = useContext(AuthContext);
+
+  useEffect(() => {
+    setError(() => state.errorMessage);
+  }, [state.errorMessage]);
+
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     setError(() => '');
-    isPasswordsMatching(password, confirmPassword, setError);
-    isValidEmail(email, setError);
+    if (
+      !isPasswordsMatching(password, confirmPassword, setError) ||
+      !isValidEmail(email, setError)
+    ) {
+      return;
+    }
 
-    // send request
-    console.log(email, password, confirmPassword);
+    clearErrorMessage();
+    signup(email.trim(), password.trim(), () => {
+      navigate('/');
+    });
   };
 
   const inputs = [

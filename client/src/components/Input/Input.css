@@ -4,6 +4,8 @@
   margin-bottom: 2em;
 }
 .user-input-wrp .inputText {
+  color: #685206;
+  font-size: 16px;
   width: 100%;
   outline: none;
   border: none;
@@ -25,6 +27,6 @@
 .user-input-wrp input:not(:focus):valid ~ .floating-label {
   top: 0px;
   left: 10px;
-  font-size: 13px;
+  font-size: 14px;
   opacity: 1;
 }

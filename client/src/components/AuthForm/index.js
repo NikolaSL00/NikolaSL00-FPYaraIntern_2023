@@ -13,9 +13,11 @@ const AuthForm = ({
   error,
 }) => {
   const navigate = useNavigate();
-  const renderedInputs = inputs.map((input) => {
+  const renderedInputs = inputs.map((input, index) => {
+    const autofocus = index === 0;
     return (
       <Input
+        autoFocus={autofocus}
         key={input.text}
         type={input.type}
         text={input.text}

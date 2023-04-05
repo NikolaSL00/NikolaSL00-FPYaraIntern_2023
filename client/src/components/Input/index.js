@@ -1,10 +1,11 @@
 import './Input.css';
 
-const Input = ({ onChange, value, text, type, required }) => {
+const Input = ({ onChange, value, text, type, required, ...props }) => {
   return (
     <div className="user-input-wrp">
       <br />
       <input
+        {...props}
         onChange={onChange}
         value={value}
         type={type || 'text'}

@@ -1,21 +1,33 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import AuthForm from '../../components/AuthForm';
 
 import { isValidEmail } from '../../helpers/validators';
+import { Context as AuthContext } from '../../context/AuthContext';
 
 const SignInPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { state, signin, clearErrorMessage } = useContext(AuthContext);
+
+  useEffect(() => {
+    setError(() => state.errorMessage);
+  }, [state.errorMessage]);
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     setError(() => '');
-    isValidEmail(email, setError);
+    if (!isValidEmail(email, setError)) {
+      return;
+    }
 
-    // send request
-    console.log(email, password);
+    clearErrorMessage();
+    signin(email.trim(), password.trim(), () => {
+      navigate('/');
+    });
   };
 
   const inputs = [

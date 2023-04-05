@@ -1,5 +1,5 @@
 h1 {
-  color: #111;
+  color: #685206;
   font-family: 'Helvetica Neue', sans-serif;
   font-size: 275px;
   font-weight: bold;
@@ -9,7 +9,7 @@ h1 {
 }
 
 h2 {
-  color: #111;
+  color: #685206;
   font-family: 'Open Sans', sans-serif;
   font-size: 30px;
   font-weight: 300;
@@ -18,7 +18,7 @@ h2 {
 }
 
 h3 {
-  color: #111;
+  color: #685206;
   font-family: 'Open Sans', sans-serif;
   font-size: 30px;
   font-weight: 300;
@@ -35,7 +35,7 @@ p {
   text-justify: inter-word;
 }
 
-label {
+span {
   color: #685206;
   font-family: 'Helvetica Neue', sans-serif;
   font-size: 16px;
