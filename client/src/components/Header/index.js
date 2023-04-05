@@ -1,7 +1,7 @@
 import './Header.css';
 import { Row, Col } from 'react-grid-system';
 import { useNavigate } from 'react-router';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/warehouse-logo.avif';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const Header = () => {
           justify="center"
           onClick={() => navigate('/')}
         >
-          <img id="logo" src={logo} />
+          <img id="logo" src={logo} alt="logo" />
         </Row>
       </Col>
 

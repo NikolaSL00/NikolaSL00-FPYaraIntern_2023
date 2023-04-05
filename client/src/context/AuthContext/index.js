@@ -31,7 +31,7 @@ const getUserIfCookieAvailable = (dispatch) => async (callback) => {
       callback();
     }
   } catch (err) {
-    console.error(err);
+    // console.error(err);
   }
 };
 const signup = (dispatch) => async (email, password, callback) => {
