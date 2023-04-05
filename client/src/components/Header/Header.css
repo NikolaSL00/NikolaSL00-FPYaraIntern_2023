@@ -1,0 +1,17 @@
+#header-left-col {
+  width: 125px;
+}
+
+#logo {
+  width: 125px;
+}
+
+#header-right-col {
+  height: 100%;
+  border-left: 1px solid gray;
+  width: calc(100% - 150px);
+}
+
+#header-title {
+  color: #685206;
+}

@@ -29,23 +29,25 @@ const AuthForm = ({
   });
 
   return (
-    <div className="auth-form-container">
-      <h3 className="auth-form-header">{title}</h3>
+    <div className="content-container">
+      <div className="auth-form-container">
+        <h3 className="auth-form-header">{title}</h3>
 
-      <form className="auth-form" onSubmit={onSubmit}>
-        {renderedInputs}
-        {error && (
-          <div className="auth-form-error-container">
-            <p className="auth-form-error">{error}</p>
-          </div>
-        )}
-        <Button className="auth-form-button">{btnText}</Button>
-      </form>
-      <div
-        className="auth-form-link-clickable"
-        onClick={() => navigate(linkPath)}
-      >
-        <p className="auth-form-link">{linkText}</p>
+        <form className="auth-form" onSubmit={onSubmit}>
+          {renderedInputs}
+          {error && (
+            <div className="auth-form-error-container">
+              <p className="auth-form-error">{error}</p>
+            </div>
+          )}
+          <Button className="auth-form-button">{btnText}</Button>
+        </form>
+        <div
+          className="auth-form-link-clickable"
+          onClick={() => navigate(linkPath)}
+        >
+          <p className="auth-form-link">{linkText}</p>
+        </div>
       </div>
     </div>
   );
