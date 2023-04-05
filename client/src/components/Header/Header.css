@@ -1,11 +1,11 @@
 #header-left-col {
   width: 125px;
+  cursor: pointer;
 }
 
 #logo {
-  width: 110px;
+  width: 82px;
   height: 82px;
-  cursor: pointer;
 }
 
 #header-right-col {

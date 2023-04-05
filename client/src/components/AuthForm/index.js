@@ -29,7 +29,7 @@ const AuthForm = ({
   });
 
   return (
-    <div className="content-container">
+    <div className="content-container-auth">
       <div className="auth-form-container">
         <h3 className="auth-form-header">{title}</h3>
 

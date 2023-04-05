@@ -7,13 +7,13 @@ const Header = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Col id="header-left-col" md={1}>
+      <Col id="header-left-col" md={1} onClick={() => navigate('/')}>
         <Row
+          id="image-row"
           gutterWidth={0}
           direction="row"
           align="center"
           justify="center"
-          onClick={() => navigate('/')}
         >
           <img id="logo" src={logo} alt="logo" />
         </Row>
