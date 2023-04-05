@@ -21,12 +21,27 @@ const authReducer = (state, action) => {
   }
 };
 
+const getUserIfCookieAvailable = (dispatch) => async (callback) => {
+  try {
+    const response = await restApi.get('/auth/whoami');
+
+    dispatch({ type: SIGNIN, payload: response.data });
+
+    if (callback) {
+      callback();
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
 const signup = (dispatch) => async (email, password, callback) => {
   try {
     const response = await restApi.post('/auth/signup', { email, password });
 
     dispatch({ type: SIGNIN, payload: response.data });
-    callback();
+    if (callback) {
+      callback();
+    }
   } catch (err) {
     dispatch({ type: ERROR, payload: err.response.data.message });
   }
@@ -36,7 +51,9 @@ const signin = (dispatch) => async (email, password, callback) => {
     const response = await restApi.post('/auth/signin', { email, password });
 
     dispatch({ type: SIGNIN, payload: response.data });
-    callback();
+    if (callback) {
+      callback();
+    }
   } catch (err) {
     dispatch({ type: ERROR, payload: err.response.data.message });
   }
@@ -45,7 +62,9 @@ const signout = (dispatch) => async (callback) => {
   try {
     await restApi.get('/auth/signout');
     dispatch({ type: SIGNOUT });
-    callback();
+    if (callback) {
+      callback();
+    }
   } catch (err) {
     dispatch({ type: ERROR, payload: err.response.data.message });
   }
@@ -56,6 +75,6 @@ const clearErrorMessage = (dispatch) => () => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signin, signup, signout, clearErrorMessage },
+  { signin, signup, signout, clearErrorMessage, getUserIfCookieAvailable },
   { user: null, errorMessage: '' }
 );
