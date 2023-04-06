@@ -39,8 +39,8 @@ const getIcons = (label, sortBy, sortOrder) => {
   if (label !== sortBy) {
     return (
       <div>
-        <GoArrowSmallUp size={20} />
-        <GoArrowSmallDown size={20} />
+        <GoArrowSmallUp size={25} />
+        <GoArrowSmallDown size={25} />
       </div>
     );
   }
@@ -48,20 +48,20 @@ const getIcons = (label, sortBy, sortOrder) => {
   if (sortOrder === null) {
     return (
       <div>
-        <GoArrowSmallUp size={20} />
-        <GoArrowSmallDown size={20} />
+        <GoArrowSmallUp size={25} />
+        <GoArrowSmallDown size={25} />
       </div>
     );
   } else if (sortOrder === 'asc') {
     return (
       <div>
-        <GoArrowSmallUp size={20} />
+        <GoArrowSmallUp size={25} />
       </div>
     );
   } else if (sortOrder === 'desc') {
     return (
       <div>
-        <GoArrowSmallDown size={20} />
+        <GoArrowSmallDown size={25} />
       </div>
     );
   }
