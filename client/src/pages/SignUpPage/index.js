@@ -31,7 +31,7 @@ const SignUpPage = () => {
 
     clearErrorMessage();
     signup(email.trim(), password.trim(), () => {
-      navigate('/');
+      navigate('/warehouses');
     });
   };
 

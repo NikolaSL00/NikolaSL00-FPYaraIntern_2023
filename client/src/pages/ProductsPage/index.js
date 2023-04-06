@@ -1,5 +1,5 @@
 import './ProductsPage.css';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { Context as ProductContext } from '../../context/ProductContext';
 
 import SortableTable from '../../components/SortableTable';
@@ -56,7 +56,6 @@ const Products = () => {
 
   useEffect(() => {
     getProducts();
-    console.log(products);
   }, []);
 
   useEffect(() => {

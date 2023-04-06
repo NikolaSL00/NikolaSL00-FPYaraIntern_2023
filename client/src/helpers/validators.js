@@ -15,8 +15,13 @@ export function isPasswordsMatching(password, confirmPassword, setError) {
 }
 
 export function isNumeric(value, fieldName, setError) {
-  if (!(!isNaN(parseFloat(value)) && isFinite(value))) {
+  if (isNaN(parseFloat(value)) || !isFinite(value)) {
     setError(() => `${fieldName} should be numeric`);
+    return false;
+  }
+
+  if (Number(value) === 0) {
+    setError(() => `${fieldName} can not be 0`);
     return false;
   }
   return true;

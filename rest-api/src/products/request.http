@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "name":"nicer product 3",
-    "width": 5.70,
+    "width": "5.70",
     "height": 0.30,
     "length": 20,
     "price": 100,

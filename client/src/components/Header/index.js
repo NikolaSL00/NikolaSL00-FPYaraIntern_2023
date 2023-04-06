@@ -7,7 +7,7 @@ const Header = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Col id="header-left-col" md={1} onClick={() => navigate('/')}>
+      <Col id="header-left-col" md={1} onClick={() => navigate('/warehouses')}>
         <Row
           id="image-row"
           gutterWidth={0}

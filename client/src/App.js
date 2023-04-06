@@ -1,27 +1,30 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { Container, Row, Col } from 'react-grid-system';
 
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
-import SignUpPage from './pages/SignUpPage';
-import SignInPage from './pages/SignInPage';
-import Home from './pages/Home';
 import PrivateRoute from './components/Guards/PrivateRoute';
 import PublicRoute from './components/Guards/PublicRoute';
-
 import { Context as AuthContext } from './context/AuthContext';
-import SignOut from './pages/SignOut';
-import Warehouses from './pages/Warehouses';
+
+import SignInPage from './pages/SignInPage';
+import SignUpPage from './pages/SignUpPage';
+import SignOutPage from './pages/SignOutPage';
+import WarehousesPage from './pages/WarehousesPage';
 import Products from './pages/ProductsPage';
-import Movements from './pages/Movements';
+import MovementsPage from './pages/MovementsPage';
 
 const App = () => {
+  const navigate = useNavigate();
   const { getUserIfCookieAvailable } = useContext(AuthContext);
 
   useEffect(() => {
-    getUserIfCookieAvailable();
+    getUserIfCookieAvailable(() => {
+      navigate('/warehouses');
+    });
   }, []);
 
   return (
@@ -43,11 +46,10 @@ const App = () => {
             </Route>
 
             <Route element={<PrivateRoute />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/signout" element={<SignOut />} />
-              <Route path="/warehouses" element={<Warehouses />} />
+              <Route path="/signout" element={<SignOutPage />} />
+              <Route path="/warehouses" element={<WarehousesPage />} />
               <Route path="/products" element={<Products />} />
-              <Route path="/movements" element={<Movements />} />
+              <Route path="/movements" element={<MovementsPage />} />
             </Route>
           </Routes>
         </Col>

@@ -1,5 +1,5 @@
 import './ProductForm.css';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import Form from '../Form';
 import { Context as ProductContext } from '../../context/ProductContext';
@@ -59,6 +59,10 @@ const ProductForm = () => {
       onChange: setType,
     },
   ];
+
+  useEffect(() => {
+    setError(() => state.errorMessage);
+  }, [state.errorMessage]);
 
   const resetFormValues = () => {
     setName('');

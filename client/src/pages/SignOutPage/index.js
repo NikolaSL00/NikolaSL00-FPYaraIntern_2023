@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Context as AuthContext } from '../../context/AuthContext';
 
-const SignOut = () => {
+const SignOutPage = () => {
   const navigate = useNavigate();
   const { signout } = useContext(AuthContext);
 
@@ -11,4 +11,4 @@ const SignOut = () => {
   }, []);
 };
 
-export default SignOut;
+export default SignOutPage;

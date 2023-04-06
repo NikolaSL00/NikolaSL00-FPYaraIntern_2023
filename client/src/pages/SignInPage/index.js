@@ -26,7 +26,7 @@ const SignInPage = () => {
 
     clearErrorMessage();
     signin(email.trim(), password.trim(), () => {
-      navigate('/');
+      navigate('/warehouses');
     });
   };
 
