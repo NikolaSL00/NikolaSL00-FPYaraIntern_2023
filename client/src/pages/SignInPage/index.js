@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import AuthForm from '../../components/AuthForm';
+import Form from '../../components/Form';
 
 import { isValidEmail } from '../../helpers/validators';
 import { Context as AuthContext } from '../../context/AuthContext';
@@ -48,7 +48,7 @@ const SignInPage = () => {
   ];
 
   return (
-    <AuthForm
+    <Form
       inputs={inputs}
       title="Sign In"
       btnText="Sign In"

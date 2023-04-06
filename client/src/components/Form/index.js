@@ -1,9 +1,10 @@
-import './authForm.css';
+import './Form.css';
 import { useNavigate } from 'react-router';
 import Button from '../Button';
 import Input from '../Input';
 
-const AuthForm = ({
+const Form = ({
+  className,
   title,
   btnText,
   linkText,
@@ -29,7 +30,7 @@ const AuthForm = ({
   });
 
   return (
-    <div className="content-container-auth">
+    <div className={`content-container-auth ${className}`}>
       <div className="auth-form-container">
         <h3 className="auth-form-header">{title}</h3>
 
@@ -53,4 +54,4 @@ const AuthForm = ({
   );
 };
 
-export default AuthForm;
+export default Form;

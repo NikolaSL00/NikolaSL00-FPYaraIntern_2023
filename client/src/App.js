@@ -14,7 +14,7 @@ import PublicRoute from './components/Guards/PublicRoute';
 import { Context as AuthContext } from './context/AuthContext';
 import SignOut from './pages/SignOut';
 import Warehouses from './pages/Warehouses';
-import Products from './pages/Products';
+import Products from './pages/ProductsPage';
 import Movements from './pages/Movements';
 
 const App = () => {

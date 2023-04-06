@@ -4,7 +4,8 @@ import { Fragment } from 'react';
 const Table = ({ data, config, keyFn }) => {
   const renderedRows = data.map((rowData) => {
     const renderedCells = config.map((column, index) => {
-      let style = index !== 0 ? 'table-cell-align-right' : '';
+      let style =
+        index !== 0 ? 'table-cell-align-right' : 'table-cell-align-center';
       return (
         <td className={`table-column-label ${style}`} key={column.label}>
           {column.render(rowData)}

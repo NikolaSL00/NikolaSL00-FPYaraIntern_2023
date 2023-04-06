@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import { isValidEmail, isPasswordsMatching } from '../../helpers/validators';
-import AuthForm from '../../components/AuthForm';
+import Form from '../../components/Form';
 import { Context as AuthContext } from '../../context/AuthContext';
 
 const SignUpPage = () => {
@@ -60,7 +60,7 @@ const SignUpPage = () => {
   ];
 
   return (
-    <AuthForm
+    <Form
       inputs={inputs}
       title="Sign Up"
       btnText="Sign Up"

@@ -13,3 +13,23 @@ export function isPasswordsMatching(password, confirmPassword, setError) {
   }
   return true;
 }
+
+export function isNumeric(value, fieldName, setError) {
+  if (!(!isNaN(parseFloat(value)) && isFinite(value))) {
+    setError(() => `${fieldName} should be numeric`);
+    return false;
+  }
+  return true;
+}
+
+export function isProductType(value, setError) {
+  const NORMAL = 'normal';
+  const HAZARDOUS = 'hazardous';
+
+  if (value !== NORMAL && value !== HAZARDOUS) {
+    setError(() => `Product type can be either ${NORMAL} or ${HAZARDOUS}`);
+    return false;
+  }
+
+  return true;
+}

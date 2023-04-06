@@ -34,21 +34,24 @@ const getProducts = (dispatch) => async (callback) => {
 const addProduct =
   (dispatch) => async (name, width, height, length, price, type, callback) => {
     try {
-      const response = await restApi.post('/products', {
+      await restApi.post('/products', {
         name,
-        width,
-        height,
-        length,
-        price,
+        width: parseFloat(width),
+        height: parseFloat(height),
+        length: parseFloat(length),
+        price: parseFloat(price),
         type,
       });
+
+      const response = await restApi.get('/products');
 
       dispatch({ type: GET_ALL_PRODUCTS, payload: response.data });
       if (callback) {
         callback();
       }
     } catch (err) {
-      dispatch({ type: ERROR, payload: err.response.data.message });
+      console.log(err);
+      dispatch({ type: ERROR, payload: err.response.data.message[0] });
     }
   };
 const clearErrorMessage = (dispatch) => () => {

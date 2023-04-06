@@ -1,6 +1,10 @@
 table {
   border-collapse: separate;
   border-spacing: 0.75em;
+
+  display: block;
+  height: 725px;
+  overflow-y: scroll;
 }
 th {
   font-weight: 900;
@@ -9,6 +13,10 @@ th {
 td {
   font-weight: 500;
   color: #685206;
+}
+tr,
+td {
+  overflow: hidden;
 }
 
 .table-column-label {
@@ -29,4 +37,8 @@ td {
 
 .table-cell-align-right {
   text-align: right;
+}
+
+.table-cell-align-center {
+  text-align: center;
 }
