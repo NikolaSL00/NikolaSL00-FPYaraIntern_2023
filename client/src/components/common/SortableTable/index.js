@@ -1,6 +1,6 @@
 import './SortableTable.css';
 import { GoArrowSmallDown, GoArrowSmallUp } from 'react-icons/go';
-import useSort from '../../hooks/useSort';
+import useSort from '../../../hooks/useSort';
 import Table from '../Table';
 
 const SortableTable = (props) => {

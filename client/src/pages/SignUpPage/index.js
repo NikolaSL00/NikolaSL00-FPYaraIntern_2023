@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import { isValidEmail, isPasswordsMatching } from '../../helpers/validators';
-import Form from '../../components/Form';
+import Form from '../../components/common/Form';
 import { Context as AuthContext } from '../../context/AuthContext';
 
 const SignUpPage = () => {

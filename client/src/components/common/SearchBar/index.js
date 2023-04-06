@@ -1,6 +1,6 @@
 import './SearchBar.css';
 
-import Input from '../../components/Input';
+import Input from '../Input';
 import { ImSearch } from 'react-icons/im';
 
 const SearchBar = ({ value, onChange }) => {

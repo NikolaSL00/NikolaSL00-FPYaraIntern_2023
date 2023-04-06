@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import Form from '../../components/Form';
+import Form from '../../components/common/Form';
 
 import { isValidEmail } from '../../helpers/validators';
 import { Context as AuthContext } from '../../context/AuthContext';

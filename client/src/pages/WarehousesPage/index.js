@@ -3,8 +3,8 @@ import './WarehousesPage.css';
 import { useContext, useEffect, useState } from 'react';
 import { Context as WarehouseContext } from '../../context/WarehouseContext';
 import WarehouseCard from '../../components/WarehouseCard';
-import FloatingButton from '../../components/FloatingButton';
-import Modal from '../../components/Modal';
+import FloatingButton from '../../components/common/FloatingButton';
+import WarehouseAddForm from '../../components/WarehouseAddForm';
 
 const WarehousesPage = () => {
   const { state, getWarehouses, removeWarehouse } =
@@ -16,12 +16,9 @@ const WarehousesPage = () => {
     getWarehouses();
   }, []);
 
-  const closeModal = () => {
+  const onClose = () => {
     setShowModal(false);
   };
-
-  const modal = <Modal onClose={closeModal}></Modal>;
-
   const render = state.warehouses.map((warehouse) => {
     return (
       <WarehouseCard
@@ -31,6 +28,8 @@ const WarehousesPage = () => {
       />
     );
   });
+
+  const modal = <WarehouseAddForm onClose={onClose} />;
 
   return (
     <div className="warehouses-page-container">

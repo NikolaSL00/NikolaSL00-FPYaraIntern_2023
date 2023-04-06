@@ -18,6 +18,7 @@
 .form-add-product-container {
   width: 55%;
   height: 100%;
+  margin-top: -6em;
 }
 
 .not-found-div {

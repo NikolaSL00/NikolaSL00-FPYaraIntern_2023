@@ -1,7 +1,7 @@
 import './ProductForm.css';
 import { useState, useContext, useEffect } from 'react';
 
-import Form from '../Form';
+import Form from '../common/Form';
 import { Context as ProductContext } from '../../context/ProductContext';
 import { isNumeric, isProductOrWarehouseType } from '../../helpers/validators';
 

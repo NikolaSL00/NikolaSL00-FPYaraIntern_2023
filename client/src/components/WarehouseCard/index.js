@@ -2,14 +2,30 @@ import './WarehouseCard.css';
 import { BiMap } from 'react-icons/bi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { FaEdit } from 'react-icons/fa';
+import { useState } from 'react';
+
+import WarehouseUpdateForm from '../WarehouseUpdateForm';
 
 const WarehouseCard = ({ warehouse, onDelete }) => {
+  const [showModal, setShowModal] = useState(false);
+
   const { id, name, type, address, volumeLimit, volume } = warehouse;
+
+  const onClose = () => {
+    setShowModal(false);
+  };
+
+  const modal = <WarehouseUpdateForm warehouse={warehouse} onClose={onClose} />;
 
   return (
     <div id={id} className="card">
       <div className="card-controls">
-        <FaEdit size={22} color="#685206" className="clickable-control" />
+        <FaEdit
+          size={22}
+          color="#685206"
+          className="clickable-control"
+          onClick={() => setShowModal(true)}
+        />
         <RiDeleteBin5Line
           size={22}
           color="#685206"
@@ -27,6 +43,7 @@ const WarehouseCard = ({ warehouse, onDelete }) => {
         </p>
         <p className="card-text">Type: {type}</p>
       </div>
+      {showModal && modal}
     </div>
   );
 };

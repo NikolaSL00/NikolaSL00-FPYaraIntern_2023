@@ -2,8 +2,8 @@ import './ProductsPage.css';
 import { useContext, useEffect } from 'react';
 import { Context as ProductContext } from '../../context/ProductContext';
 
-import SortableTable from '../../components/SortableTable';
-import SearchBar from '../../components/SearchBar';
+import SortableTable from '../../components/common/SortableTable';
+import SearchBar from '../../components/common/SearchBar';
 import { useSearch } from '../../hooks/useSearch';
 import ProductForm from '../../components/ProductForm';
 
