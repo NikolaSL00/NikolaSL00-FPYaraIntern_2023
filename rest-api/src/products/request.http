@@ -2,7 +2,7 @@ POST http://localhost:3000/products
 Content-Type: application/json
 
 {
-    "name":"nice product 3",
+    "name":"nicer product 3",
     "width": 5.70,
     "height": 0.30,
     "length": 20,
