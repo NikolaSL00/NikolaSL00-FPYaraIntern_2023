@@ -2,7 +2,7 @@ POST http://localhost:3000/warehouses
 Content-Type: application/json
 
 {
-    "name": "warehouse #2",
+    "name": "warehouse #6",
     "address": "Bulgaria, Varna",
     "volumeLimit": 15000000,
     "type": "hazardous"
@@ -15,7 +15,8 @@ Content-Type: application/json
 {
     "name": "warehouse #2",
     "address": "Bulgaria, Sofia",
-    "volumeLimit": 20000000
+    "volumeLimit": 20000000,
+    "type": "normal"
 }
 
 ###

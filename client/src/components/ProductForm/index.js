@@ -3,7 +3,7 @@ import { useState, useContext, useEffect } from 'react';
 
 import Form from '../Form';
 import { Context as ProductContext } from '../../context/ProductContext';
-import { isNumeric, isProductType } from '../../helpers/validators';
+import { isNumeric, isProductOrWarehouseType } from '../../helpers/validators';
 
 const ProductForm = () => {
   const { state, addProduct, clearErrorMessage } = useContext(ProductContext);
@@ -83,7 +83,7 @@ const ProductForm = () => {
       !isNumeric(height, 'Height', setError) ||
       !isNumeric(length, 'Length', setError) ||
       !isNumeric(price, 'Price', setError) ||
-      !isProductType(type, setError)
+      !isProductOrWarehouseType(type, 'Product Type', setError)
     ) {
       return;
     }

@@ -50,7 +50,6 @@ const addProduct =
         callback();
       }
     } catch (err) {
-      console.log(err);
       dispatch({ type: ERROR, payload: err.response.data.message[0] });
     }
   };

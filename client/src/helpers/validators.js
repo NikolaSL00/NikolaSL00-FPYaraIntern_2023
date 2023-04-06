@@ -27,12 +27,12 @@ export function isNumeric(value, fieldName, setError) {
   return true;
 }
 
-export function isProductType(value, setError) {
+export function isProductOrWarehouseType(value, fieldName, setError) {
   const NORMAL = 'normal';
   const HAZARDOUS = 'hazardous';
 
   if (value !== NORMAL && value !== HAZARDOUS) {
-    setError(() => `Product type can be either ${NORMAL} or ${HAZARDOUS}`);
+    setError(() => `${fieldName} can be either ${NORMAL} or ${HAZARDOUS}`);
     return false;
   }
 

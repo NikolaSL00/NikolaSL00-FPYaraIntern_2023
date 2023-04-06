@@ -1,0 +1,10 @@
+.floating-button {
+  width: 200px;
+  height: 50px;
+
+  position: fixed;
+  bottom: 2em;
+  right: 50%;
+
+  margin-right: -200px;
+}

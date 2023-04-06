@@ -1,0 +1,36 @@
+.card {
+  position: relative;
+  width: 175px;
+  height: 175px;
+  border: 1px solid black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-controls {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.clickable-control {
+  cursor: pointer;
+}
+
+.card-text {
+  text-align: center;
+}
