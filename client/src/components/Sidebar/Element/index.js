@@ -1,5 +1,7 @@
 import { Row } from 'react-grid-system';
 
+import { GoArrowRight } from 'react-icons/go';
+
 const Element = ({ text, path }) => {
   return (
     <>
@@ -11,7 +13,7 @@ const Element = ({ text, path }) => {
         direction="column"
       >
         <div className="nav-element-div">
-          <i className="fa-solid fa-arrow-right"></i>
+          <GoArrowRight color="#685206" size={25} />
         </div>
         <div>
           <p>{text}</p>

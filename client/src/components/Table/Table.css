@@ -1,0 +1,32 @@
+table {
+  border-collapse: separate;
+  border-spacing: 0.75em;
+}
+th {
+  font-weight: 900;
+  color: #685206;
+}
+td {
+  font-weight: 500;
+  color: #685206;
+}
+
+.table-column-label {
+  padding: 0.5rem;
+}
+
+.table-header-row {
+  border-bottom-width: 2px;
+}
+
+.table-row {
+  border-bottom-width: 1px;
+}
+
+.table {
+  table-layout: auto;
+}
+
+.table-cell-align-right {
+  text-align: right;
+}

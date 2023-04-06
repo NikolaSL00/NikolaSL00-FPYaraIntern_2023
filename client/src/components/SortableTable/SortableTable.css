@@ -1,0 +1,13 @@
+.sortable-table-header-cell {
+  cursor: pointer;
+}
+
+.sortable-table-header-cell:hover {
+  background-color: #f3f4f6;
+}
+
+.sortable-table-header-cell-icons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
