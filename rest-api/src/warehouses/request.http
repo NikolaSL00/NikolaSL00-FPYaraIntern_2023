@@ -1,0 +1,25 @@
+POST http://localhost:3000/warehouses
+Content-Type: application/json
+
+{
+    "name": "warehouse #2",
+    "address": "Bulgaria, Varna",
+    "volumeLimit": 15000000,
+    "type": "hazardous"
+}
+
+###
+PATCH  http://localhost:3000/warehouses/3
+Content-Type: application/json
+
+{
+    "name": "warehouse #2",
+    "address": "Bulgaria, Sofia",
+    "volumeLimit": 20000000
+}
+
+###
+DELETE  http://localhost:3000/warehouses/7
+
+###
+GET http://localhost:3000/warehouses

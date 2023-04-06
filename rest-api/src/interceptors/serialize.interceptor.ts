@@ -3,6 +3,7 @@ import {
   NestInterceptor,
   ExecutionContext,
   CallHandler,
+  HttpException,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -23,6 +24,13 @@ export class SerializeInterceptor implements NestInterceptor {
     // Run somehting before a request is handled by the request handler
     return handler.handle().pipe(
       map((data: any) => {
+        if (data instanceof HttpException) {
+          return {
+            statusCode: data.getStatus(),
+            message: data.message,
+          };
+        }
+
         // Run somehting before the response is sent out
         return plainToInstance(this.dto, data, {
           excludeExtraneousValues: true,
