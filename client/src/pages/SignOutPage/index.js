@@ -7,7 +7,7 @@ const SignOutPage = () => {
   const { signout } = useContext(AuthContext);
 
   useEffect(() => {
-    signout(() => navigate('/'));
+    signout(() => navigate('/signin'));
   }, []);
 };
 
