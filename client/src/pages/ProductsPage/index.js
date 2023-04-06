@@ -71,7 +71,8 @@ const Products = () => {
       />
     ) : (
       <div className="not-found-div">
-        <p>No products match the search criteria</p>
+        {products.length > 0 && <p>No products match the search criteria</p>}
+        {products.length === 0 && <p>There are no products yet</p>}
       </div>
     );
 
