@@ -50,7 +50,7 @@ const addProduct =
         callback();
       }
     } catch (err) {
-      dispatch({ type: ERROR, payload: err.response.data.message[0] });
+      dispatch({ type: ERROR, payload: err.response.data.message });
     }
   };
 const clearErrorMessage = (dispatch) => () => {

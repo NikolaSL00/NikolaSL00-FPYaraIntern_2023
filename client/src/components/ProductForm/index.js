@@ -89,8 +89,9 @@ const ProductForm = () => {
     }
 
     clearErrorMessage();
-    addProduct(name.trim(), width, height, length, price, type);
-    resetFormValues();
+    addProduct(name.trim(), width, height, length, price, type, () => {
+      resetFormValues();
+    });
   };
 
   return (
