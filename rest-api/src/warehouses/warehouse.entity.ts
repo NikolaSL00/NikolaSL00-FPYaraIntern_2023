@@ -18,7 +18,7 @@ export class Warehouse {
   @ManyToOne(() => User, { eager: true })
   user: User;
 
-  @Column()
+  @Column({ unique: true })
   name: string;
 
   @Column()
@@ -36,9 +36,6 @@ export class Warehouse {
     default: WarehouseType.NORMAL,
   })
   type: WarehouseType;
-
-  @Column({ type: 'simple-json', nullable: true })
-  productsInfo: { [productId: number]: { count: number; name: string } };
 
   @OneToMany(() => Movement, (movement) => movement.source)
   exports: Movement[];
