@@ -67,9 +67,10 @@ const WarehouseAddForm = ({ onClose }) => {
     }
 
     clearErrorMessage();
-    addWarehouse(name.trim(), address.trim(), volumeLimit, type);
-    resetFormValues();
-    onClose();
+    addWarehouse(name.trim(), address.trim(), volumeLimit, type, () => {
+      resetFormValues();
+      onClose();
+    });
   };
 
   useEffect(() => {

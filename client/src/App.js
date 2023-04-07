@@ -16,6 +16,7 @@ import SignOutPage from './pages/SignOutPage';
 import WarehousesPage from './pages/WarehousesPage';
 import Products from './pages/ProductsPage';
 import MovementsPage from './pages/MovementsPage';
+// import NotFound from './pages/NotFound';
 
 const App = () => {
   const navigate = useNavigate();
@@ -51,6 +52,8 @@ const App = () => {
               <Route path="/products" element={<Products />} />
               <Route path="/movements" element={<MovementsPage />} />
             </Route>
+
+            {/* <Route path="*" element={<NotFound />} /> */}
           </Routes>
         </Col>
       </Row>

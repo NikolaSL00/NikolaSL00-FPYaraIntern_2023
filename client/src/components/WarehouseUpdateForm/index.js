@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useCallback } from 'react';
 
 import { Context as WarehouseContext } from '../../context/WarehouseContext';
 import { isNumeric, isProductOrWarehouseType } from '../../helpers/validators';
@@ -17,6 +17,10 @@ const WarehouseUpdateForm = ({ warehouse, onClose }) => {
   const [error, setError] = useState('');
 
   const { id } = warehouse;
+
+  useEffect(() => {
+    setError(() => state.errorMessage);
+  }, [state.errorMessage]);
 
   const inputs = [
     {
@@ -67,17 +71,20 @@ const WarehouseUpdateForm = ({ warehouse, onClose }) => {
     }
 
     clearErrorMessage();
-    updateWarehouse(id, name.trim(), address.trim(), volumeLimit, type);
-    resetFormValues();
-    onClose();
+    updateWarehouse(id, name.trim(), address.trim(), volumeLimit, type, () => {
+      resetFormValues();
+      onClose();
+    });
   };
 
-  useEffect(() => {
-    setError(() => state.errorMessage);
-  }, [state.errorMessage]);
-
   return (
-    <Modal onClose={onClose} onSubmit={updateWarehouse}>
+    <Modal
+      onClose={() => {
+        clearErrorMessage();
+        onClose();
+      }}
+      onSubmit={updateWarehouse}
+    >
       <Form
         inputs={inputs}
         title="Update Warehouse"
