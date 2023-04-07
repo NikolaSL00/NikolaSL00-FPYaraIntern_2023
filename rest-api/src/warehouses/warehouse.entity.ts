@@ -37,9 +37,15 @@ export class Warehouse {
   })
   type: WarehouseType;
 
-  @OneToMany(() => Movement, (movement) => movement.source)
+  @OneToMany(() => Movement, (movement) => movement.source, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
   exports: Movement[];
 
-  @OneToMany(() => Movement, (movement) => movement.destination)
+  @OneToMany(() => Movement, (movement) => movement.destination, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
   imports: Movement[];
 }

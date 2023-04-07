@@ -13,10 +13,14 @@ export class Movement {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Warehouse, (warehouse) => warehouse.exports)
+  @ManyToOne(() => Warehouse, (warehouse) => warehouse.exports, {
+    nullable: true,
+  })
   source: Warehouse;
 
-  @ManyToOne(() => Warehouse, (warehouse) => warehouse.imports)
+  @ManyToOne(() => Warehouse, (warehouse) => warehouse.imports, {
+    nullable: true,
+  })
   destination: Warehouse;
 
   @OneToMany(
@@ -25,6 +29,6 @@ export class Movement {
   )
   products: MovementProduct[];
 
-  @Column({ type: 'timestamptz' })
-  date: Date;
+  @Column({ type: 'date' })
+  date: string;
 }
