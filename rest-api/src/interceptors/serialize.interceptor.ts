@@ -25,7 +25,7 @@ export class SerializeInterceptor implements NestInterceptor {
     return handler.handle().pipe(
       map((data: any) => {
         if (data instanceof HttpException) {
-          return {
+          throw {
             statusCode: data.getStatus(),
             message: data.message,
           };
