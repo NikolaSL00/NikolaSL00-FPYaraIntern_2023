@@ -9,6 +9,8 @@ import { User } from './users/user.entity';
 import { Warehouse } from './warehouses/warehouse.entity';
 import { Product } from './products/product.entity';
 import { MovementsModule } from './movements/movements.module';
+import { Movement } from './movements/movement.entity';
+import { MovementProduct } from './junction-table/movement-product.entity';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { MovementsModule } from './movements/movements.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       database: 'warehouses',
-      entities: [User, Warehouse, Product],
+      entities: [User, Warehouse, Product, Movement, MovementProduct],
       synchronize: true,
       host: 'localhost',
       port: 5432,

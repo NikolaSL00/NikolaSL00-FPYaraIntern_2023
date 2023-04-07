@@ -3,18 +3,20 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  ManyToMany,
-  JoinTable,
+  OneToMany,
 } from 'typeorm';
 
 import { WarehouseType } from './dtos/enums/warehouse-type.enum';
 import { User } from 'src/users/user.entity';
-import { Product } from 'src/products/product.entity';
+import { Movement } from 'src/movements/movement.entity';
 
 @Entity()
 export class Warehouse {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => User, { eager: true })
+  user: User;
 
   @Column()
   name: string;
@@ -35,10 +37,12 @@ export class Warehouse {
   })
   type: WarehouseType;
 
-  @ManyToOne(() => User, { eager: true })
-  user: User;
+  @Column({ type: 'simple-json', nullable: true })
+  productsInfo: { [productId: number]: { count: number; name: string } };
 
-  @ManyToMany(() => Product)
-  @JoinTable()
-  products: Product[];
+  @OneToMany(() => Movement, (movement) => movement.source)
+  exports: Movement[];
+
+  @OneToMany(() => Movement, (movement) => movement.destination)
+  imports: Movement[];
 }

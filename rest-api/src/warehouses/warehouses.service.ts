@@ -40,7 +40,6 @@ export class WarehousesService {
   async update(id: number, updateWarehouseDto: Partial<Warehouse>) {
     const warehouse = await this.warehouseRepository.findOne({
       where: { id },
-      relations: { products: true },
     });
 
     if (!warehouse) {
@@ -53,13 +52,20 @@ export class WarehousesService {
     warehouse.volumeLimit =
       updateWarehouseDto.volumeLimit ?? warehouse.volumeLimit;
 
+    const productsCount =
+      warehouse.productsInfo &&
+      Object.values(warehouse.productsInfo).reduce(
+        (acc, prodCountName) => prodCountName.count + acc,
+        0,
+      );
+
     if (
       updateWarehouseDto.type &&
       updateWarehouseDto.type !== warehouse.type &&
-      warehouse.products.length > 0
+      productsCount
     ) {
       return new BadRequestException(
-        'Can not change the warehouse type, when it is not empty',
+        'Can not change the warehouse type, when it has products',
       );
     }
     warehouse.type = updateWarehouseDto.type ?? warehouse.type;

@@ -1,3 +1,4 @@
+import { MovementProduct } from 'src/junction-table/movement-product.entity';
 import { Warehouse } from 'src/warehouses/warehouse.entity';
 import {
   Entity,
@@ -5,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { ProductType } from './dtos/enums/product-type.enum';
 
@@ -37,4 +39,10 @@ export class Product {
 
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   price: number;
+
+  @OneToMany(
+    () => MovementProduct,
+    (movementProduct) => movementProduct.product,
+  )
+  movements: MovementProduct[];
 }
