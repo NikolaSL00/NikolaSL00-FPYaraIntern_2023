@@ -1,0 +1,17 @@
+POST http://localhost:3000/movements
+Content-Type: application/json
+
+{
+   "sourceId": 1,
+  "destinationId": 2,
+    "transfers": [
+    {
+        "productId": 1,
+        "quantity": 10
+    },
+    {
+        "productId": 2,
+        "quantity": 20
+    }
+  ]
+}
