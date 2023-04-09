@@ -32,6 +32,7 @@ export class MovementsService {
         const sourceWarehouse = await queryRunner.manager.findOne(Warehouse, {
           where: { id: reqMovement.sourceId },
           relations: {
+            user: true,
             imports: { products: { movement: true, product: true } },
             exports: { products: { movement: true, product: true } },
           },
@@ -49,27 +50,19 @@ export class MovementsService {
           },
         );
 
-        if (sourceWarehouse && sourceWarehouse.user.id !== user.id) {
-          return new UnauthorizedException(
-            'Can not import from foreign warehouse',
-          );
-        }
-        if (destinationWarehouse && destinationWarehouse.user.id !== user.id) {
-          return new UnauthorizedException(
-            'Can not export from foreign warehouse',
-          );
-        }
-
-        if (!sourceWarehouse && !destinationWarehouse) {
-          return new BadRequestException(
-            `Provide at least one warehouse to import or export from`,
-          );
-        }
+        this.validateWarehouseInput(
+          reqMovement.sourceId,
+          reqMovement.destinationId,
+          sourceWarehouse,
+          destinationWarehouse,
+          user,
+        );
 
         const movement = queryRunner.manager.create(Movement, {
           source: sourceWarehouse,
           destination: destinationWarehouse,
           date: reqMovement.date || new Date().toLocaleDateString(),
+          products: [],
         });
 
         await this.transferProducts(
@@ -96,90 +89,26 @@ export class MovementsService {
     destinationWarehouse: Warehouse,
     queryRunner: QueryRunner,
   ) {
-    movement.products = [];
     await queryRunner.manager.save(movement);
     const products = await this.getTransferProducts(transfers, queryRunner);
-
-    let productsVolume = 0;
-    for (const { product, quantity } of products) {
-      try {
-        const params = `?expr=${product.volume}*${quantity}&precision=2`;
-        const response = await firstValueFrom(this.httpService.get(params));
-        productsVolume += response.data;
-      } catch (err) {
-        throw new InternalServerErrorException('Something went wrong');
-      }
-    }
+    const productsVolume = await this.calculateProductsVolume(products);
 
     if (sourceWarehouse) {
-      // SOURCE
-      const sourceProdInfo = await this.getCurrentProductInfoOfWarehouse(
-        sourceWarehouse.id,
+      await this.processTransferSourceWarehouse(
+        products,
+        productsVolume,
+        sourceWarehouse,
         queryRunner,
       );
-      // check source warehouse product qty
-      for (const { product, quantity } of products) {
-        if (
-          !sourceProdInfo[product.id] ||
-          sourceProdInfo[product.id] < quantity
-        ) {
-          throw new HttpException(
-            `Not enough quantity in warehouse named ${sourceWarehouse.name} of product ${product.name}`,
-            400,
-          );
-        }
-      }
-
-      let newSourceVolume;
-      try {
-        const params = `?expr=${sourceWarehouse.volume}-${productsVolume}&precision=2`;
-        const response = await firstValueFrom(this.httpService.get(params));
-        newSourceVolume = response.data;
-      } catch (err) {
-        throw new InternalServerErrorException('Something went wrong');
-      }
-      sourceWarehouse.volume = newSourceVolume;
-      queryRunner.manager.save(sourceWarehouse);
     }
 
     if (destinationWarehouse) {
-      // DESTINATION
-      // #1 each product.type === destination.type
-      for (const { product, _ } of products) {
-        if (product.type !== destinationWarehouse.type) {
-          throw new BadRequestException(
-            `Can not supply warehouse of ${destinationWarehouse.type} type with product of ${product.type} type`,
-          );
-        }
-      }
-
-      let destinationFreeVolume;
-      try {
-        const params = `?expr=${destinationWarehouse.volumeLimit}-${destinationWarehouse.volume}&precision=2`;
-        const response = await firstValueFrom(this.httpService.get(params));
-        destinationFreeVolume = response.data;
-      } catch (err) {
-        throw new InternalServerErrorException('Something went wrong');
-      }
-
-      // #3 capacity freeLimit in destination > volume of all products
-      if (destinationFreeVolume < productsVolume) {
-        throw new BadRequestException(
-          `Destination warehouse with id ${destinationWarehouse.id} capacity has not enough volume capacity`,
-        );
-      }
-
-      let newDestinationVolume;
-      try {
-        const params = `?expr=${destinationWarehouse.volume}%2B${productsVolume}&precision=2`;
-        const response = await firstValueFrom(this.httpService.get(params));
-        newDestinationVolume = response.data;
-      } catch (err) {
-        throw new InternalServerErrorException('Something went wrong');
-      }
-
-      destinationWarehouse.volume = newDestinationVolume;
-      queryRunner.manager.save(destinationWarehouse);
+      await this.processTransferDestinationWarehouse(
+        products,
+        productsVolume,
+        destinationWarehouse,
+        queryRunner,
+      );
     }
 
     for (let { product, quantity } of products) {
@@ -197,6 +126,39 @@ export class MovementsService {
     return movement;
   }
 
+  private validateWarehouseInput(
+    sourceId: number,
+    destinationId: number,
+    sourceWarehouse: Warehouse,
+    destinationWarehouse: Warehouse,
+    user: User,
+  ) {
+    if (sourceId !== null && !sourceWarehouse) {
+      throw new BadRequestException(
+        `Source warehouse with id ${sourceId} not found`,
+      );
+    }
+
+    if (destinationId !== null && !destinationWarehouse) {
+      console.log('err');
+      throw new BadRequestException(
+        `Destination warehouse with id ${destinationId} not found`,
+      );
+    }
+
+    if (sourceWarehouse && sourceWarehouse.user.id !== user.id) {
+      throw new UnauthorizedException('Can not import from foreign warehouse');
+    }
+    if (destinationWarehouse && destinationWarehouse.user.id !== user.id) {
+      throw new UnauthorizedException('Can not export from foreign warehouse');
+    }
+    if (!sourceWarehouse && !destinationWarehouse) {
+      throw new BadRequestException(
+        `Provide at least one warehouse to import or export from`,
+      );
+    }
+  }
+
   private async getTransferProducts(transfers, queryRunner: QueryRunner) {
     const products = [];
 
@@ -209,6 +171,96 @@ export class MovementsService {
     }
 
     return products;
+  }
+
+  private async calculateProductsVolume(products) {
+    for (const { product, quantity } of products) {
+      try {
+        const params = `?expr=${product.volume}*${quantity}&precision=2`;
+        const response = await firstValueFrom(this.httpService.get(params));
+        return response.data;
+      } catch (err) {
+        throw new InternalServerErrorException('Something went wrong');
+      }
+    }
+  }
+
+  private async processTransferSourceWarehouse(
+    products,
+    productsVolume,
+    sourceWarehouse: Warehouse,
+    queryRunner: QueryRunner,
+  ) {
+    const sourceProdInfo = await this.getCurrentProductInfoOfWarehouse(
+      sourceWarehouse.id,
+      queryRunner,
+    );
+    // check source warehouse product qty
+    for (const { product, quantity } of products) {
+      if (
+        !sourceProdInfo[product.id] ||
+        sourceProdInfo[product.id] < quantity
+      ) {
+        throw new BadRequestException(
+          `Not enough quantity in warehouse named ${sourceWarehouse.name} of product ${product.name}`,
+        );
+      }
+    }
+
+    let newSourceVolume;
+    try {
+      const params = `?expr=${sourceWarehouse.volume}-${productsVolume}&precision=2`;
+      const response = await firstValueFrom(this.httpService.get(params));
+      newSourceVolume = response.data;
+    } catch (err) {
+      throw new InternalServerErrorException('Something went wrong');
+    }
+    sourceWarehouse.volume = newSourceVolume;
+    queryRunner.manager.save(sourceWarehouse);
+  }
+
+  private async processTransferDestinationWarehouse(
+    products,
+    productsVolume,
+    destinationWarehouse: Warehouse,
+    queryRunner: QueryRunner,
+  ) {
+    // #1 each product.type === destination.type
+    for (const { product, _ } of products) {
+      if (product.type !== destinationWarehouse.type) {
+        throw new BadRequestException(
+          `Can not supply warehouse of ${destinationWarehouse.type} type with product of ${product.type} type`,
+        );
+      }
+    }
+
+    let destinationFreeVolume;
+    try {
+      const params = `?expr=${destinationWarehouse.volumeLimit}-${destinationWarehouse.volume}&precision=2`;
+      const response = await firstValueFrom(this.httpService.get(params));
+      destinationFreeVolume = response.data;
+    } catch (err) {
+      throw new InternalServerErrorException('Something went wrong');
+    }
+
+    // #3 capacity freeLimit in destination > volume of all products
+    if (destinationFreeVolume < productsVolume) {
+      throw new BadRequestException(
+        `Destination warehouse with id ${destinationWarehouse.id} capacity has not enough volume capacity`,
+      );
+    }
+
+    let newDestinationVolume;
+    try {
+      const params = `?expr=${destinationWarehouse.volume}%2B${productsVolume}&precision=2`;
+      const response = await firstValueFrom(this.httpService.get(params));
+      newDestinationVolume = response.data;
+    } catch (err) {
+      throw new InternalServerErrorException('Something went wrong');
+    }
+
+    destinationWarehouse.volume = newDestinationVolume;
+    queryRunner.manager.save(destinationWarehouse);
   }
 
   private async getCurrentProductInfoOfWarehouse(
