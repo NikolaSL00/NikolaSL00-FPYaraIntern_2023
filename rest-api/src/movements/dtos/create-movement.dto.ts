@@ -1,4 +1,5 @@
-import { IsArray, IsNumber, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsArray, IsDate, IsNumber, IsOptional } from 'class-validator';
 
 interface Transfer {
   productId: number;
@@ -16,4 +17,9 @@ export class CreateMovementDTO {
 
   @IsArray()
   transfers: Transfer[];
+
+  @IsOptional()
+  @IsDate()
+  @Type(() => Date)
+  date: string;
 }

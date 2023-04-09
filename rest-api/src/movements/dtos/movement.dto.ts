@@ -32,5 +32,6 @@ export class MovementDTO {
   products: MovementProduct[];
 
   @Expose()
+  @Transform(({ obj }) => obj.date.toLocaleDateString())
   date: string;
 }

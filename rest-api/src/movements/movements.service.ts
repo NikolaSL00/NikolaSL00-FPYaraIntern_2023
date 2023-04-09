@@ -48,6 +48,7 @@ export class MovementsService {
             },
           },
         );
+
         if (sourceWarehouse && sourceWarehouse.user.id !== user.id) {
           return new UnauthorizedException(
             'Can not import from foreign warehouse',
@@ -68,7 +69,7 @@ export class MovementsService {
         const movement = queryRunner.manager.create(Movement, {
           source: sourceWarehouse,
           destination: destinationWarehouse,
-          date: new Date().toLocaleDateString(),
+          date: reqMovement.date || new Date().toLocaleDateString(),
         });
 
         await this.transferProducts(
