@@ -9,7 +9,6 @@ export const useSearch = (products) => {
   };
 
   const filterProducts = () => {
-    console.log(products);
     setSearchedProducts(() =>
       products.filter((product) =>
         product.name.toLowerCase().includes(search.toLowerCase())

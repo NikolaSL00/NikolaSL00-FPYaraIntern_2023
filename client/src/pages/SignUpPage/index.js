@@ -15,6 +15,10 @@ const SignUpPage = () => {
   const { state, signup, clearErrorMessage } = useContext(AuthContext);
 
   useEffect(() => {
+    clearErrorMessage();
+  }, []);
+
+  useEffect(() => {
     setError(() => state.errorMessage);
   }, [state.errorMessage]);
 
