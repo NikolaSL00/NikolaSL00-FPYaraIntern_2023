@@ -44,7 +44,7 @@ export class WarehousesService {
 
   async update(id: number, updateWarehouseDto: Partial<Warehouse>) {
     if (updateWarehouseDto.name) {
-      await this.checkUniqueName(updateWarehouseDto.name);
+      await this.checkUniqueName(updateWarehouseDto.name, id);
     }
 
     const warehouse = await this.warehouseRepo.findOne({
@@ -201,11 +201,12 @@ export class WarehousesService {
     return productInfo;
   }
 
-  async checkUniqueName(name: string) {
+  async checkUniqueName(name: string, id?: number) {
     const warehouse = await this.warehouseRepo.findOne({
       where: { name },
     });
-    if (warehouse) {
+
+    if (warehouse && warehouse.id !== id) {
       throw new BadRequestException(
         `Warehouse with name ${name} already exists`,
       );
