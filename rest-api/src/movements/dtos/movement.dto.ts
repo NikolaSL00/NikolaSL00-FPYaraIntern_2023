@@ -5,11 +5,21 @@ export class MovementDTO {
   @Expose()
   id: number;
 
-  @Transform(({ obj }) => obj.source.id)
+  @Transform(({ obj }) => {
+    if (obj.source) {
+      return obj.source.id;
+    }
+    return null;
+  })
   @Expose()
   sourceId: number;
 
-  @Transform(({ obj }) => obj.destination.id)
+  @Transform(({ obj }) => {
+    if (obj.destination) {
+      return obj.destination.id;
+    }
+    return null;
+  })
   @Expose()
   destinationId: number;
 

@@ -1,4 +1,4 @@
-import { IsArray, IsNumber } from 'class-validator';
+import { IsArray, IsNumber, IsOptional } from 'class-validator';
 
 interface Transfer {
   productId: number;
@@ -6,11 +6,13 @@ interface Transfer {
 }
 
 export class CreateMovementDTO {
+  @IsOptional()
   @IsNumber()
-  sourceId: number;
+  sourceId: number = -1;
 
+  @IsOptional()
   @IsNumber()
-  destinationId: number;
+  destinationId: number = -1;
 
   @IsArray()
   transfers: Transfer[];

@@ -24,3 +24,17 @@ DELETE  http://localhost:3000/warehouses/7
 
 ###
 GET http://localhost:3000/warehouses
+
+###
+GET http://localhost:3000/warehouses/2/prodInfo
+
+
+
+# {
+#   "warehouseId": 2,
+#   "productsQuantity": {
+#     "1": 20,
+#     "2": 40,
+#     "3": 30
+#   }
+# }

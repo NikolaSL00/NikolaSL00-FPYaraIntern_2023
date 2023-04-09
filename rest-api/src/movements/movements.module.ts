@@ -8,9 +8,15 @@ import { MovementsController } from './movements.controller';
 import { MovementsService } from './movements.service';
 import { WarehousesModule } from 'src/warehouses/warehouses.module';
 import { ProductsModule } from 'src/products/products.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
+    HttpModule.register({
+      timeout: 5000,
+      maxRedirects: 5,
+      baseURL: 'http://api.mathjs.org/v4',
+    }),
     TypeOrmModule.forFeature([Movement, Warehouse, Product, MovementProduct]),
     WarehousesModule,
     ProductsModule,
