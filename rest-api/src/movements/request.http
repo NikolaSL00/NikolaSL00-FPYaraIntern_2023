@@ -16,3 +16,6 @@ Content-Type: application/json
   ],
   "date" : "04/05/2025"
 }
+
+### 
+GET http://localhost:3000/movements?warehouseId=5

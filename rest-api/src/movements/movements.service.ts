@@ -1,7 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import {
   BadRequestException,
-  HttpException,
   Injectable,
   InternalServerErrorException,
   UnauthorizedException,
@@ -82,6 +81,24 @@ export class MovementsService {
     });
   }
 
+  async getMovementsForWarehouse(warehouseId: number) {
+    const movements = await this.dataSource
+      .getRepository(Movement)
+      .createQueryBuilder('movement')
+      .leftJoinAndSelect('movement.source', 'source')
+      .leftJoinAndSelect('movement.destination', 'destination')
+      .leftJoinAndSelect('movement.products', 'products')
+      .leftJoinAndSelect('products.product', 'product')
+      .where(
+        'movement.source.id = :sourceId OR movement.destination.id = :destId',
+        { sourceId: warehouseId, destId: warehouseId },
+      )
+      .getMany();
+
+    return movements;
+  }
+
+  // helper methods
   private async transferProducts(
     transfers,
     movement: Movement,
