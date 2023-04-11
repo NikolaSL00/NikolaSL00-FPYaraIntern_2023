@@ -1,7 +1,7 @@
 import './Table.css';
 import { Fragment } from 'react';
 
-const Table = ({ data, config, keyFn }) => {
+const Table = ({ data, config, keyFn, isScrollable }) => {
   const renderedRows = data.map((rowData) => {
     const renderedCells = config.map((column, index) => {
       let style =
@@ -29,7 +29,7 @@ const Table = ({ data, config, keyFn }) => {
   });
 
   return (
-    <table className="table">
+    <table className={`table ${isScrollable ? 'scrollable-table' : ''}`}>
       <thead>
         <tr className="table-header-row">{renderedHeaders}</tr>
       </thead>

@@ -1,8 +1,8 @@
-import { useState, useContext, useEffect, useCallback } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import { Context as WarehouseContext } from '../../context/WarehouseContext';
 import { isNumeric, isProductOrWarehouseType } from '../../helpers/validators';
-import Modal from '../Modal';
+import Modal from '../common/Modal';
 import Form from '../common/Form';
 
 const WarehouseUpdateForm = ({ warehouse, onClose }) => {

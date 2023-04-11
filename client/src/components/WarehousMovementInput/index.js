@@ -1,6 +1,8 @@
 import './WarehouseMovementInput.css';
-
+import { useState } from 'react';
 import Button from '../common/Button';
+
+import WarehouseMovements from '../WarehouseMovements';
 
 const WarehouseMovementInput = ({
   title,
@@ -16,11 +18,20 @@ const WarehouseMovementInput = ({
       </option>
     );
   });
+  const [showModal, setShowModal] = useState(false);
+
+  const warehouse = warehouses.filter(
+    (warehouse) => warehouse.id === parseInt(value)
+  )[0];
+
+  const modal = (
+    <WarehouseMovements
+      warehouse={warehouse}
+      onClose={() => setShowModal(false)}
+    />
+  );
 
   const renderDetails = () => {
-    const warehouse = warehouses.filter(
-      (warehouse) => warehouse.id === parseInt(value)
-    )[0];
     return (
       <>
         <p className="p-warehouse-details">Volume: {warehouse.volume}</p>
@@ -28,7 +39,13 @@ const WarehouseMovementInput = ({
           Free volume: {warehouse.volumeLimit - warehouse.volume}
         </p>
         <p className="p-warehouse-details">Type: {warehouse.type}</p>
-        <Button className="btn-movements-history">History of movements</Button>
+        <Button
+          className="btn-movements-history"
+          onClick={() => setShowModal(true)}
+        >
+          History of movements
+        </Button>
+        {showModal && modal}
       </>
     );
   };

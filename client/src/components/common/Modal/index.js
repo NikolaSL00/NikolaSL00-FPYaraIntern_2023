@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
 import { GrClose } from 'react-icons/gr';
 
-const Modal = ({ onClose, children }) => {
+const Modal = ({ onClose, children, className }) => {
   useEffect(() => {
     document.body.classList.add('modal-hidden');
 
@@ -15,7 +15,7 @@ const Modal = ({ onClose, children }) => {
   return ReactDOM.createPortal(
     <div>
       <div className="modal-background" onClick={onClose}></div>
-      <div className="modal-content">
+      <div className={`modal-content ${className}`}>
         {children}
         <div className="modal-controls">
           <GrClose className="modal-close" size={40} onClick={onClose} />

@@ -20,3 +20,22 @@
 .p-warehouse-details {
   text-align: center;
 }
+
+.movements-tables-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.movements-table-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-movements {
+  overflow-y: auto;
+  padding: 0 0;
+}

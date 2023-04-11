@@ -68,6 +68,7 @@ const Products = () => {
         data={searchedProducts}
         keyFn={(product) => product.id}
         config={config}
+        isScrollable={true}
       />
     ) : (
       <div className="not-found-div">

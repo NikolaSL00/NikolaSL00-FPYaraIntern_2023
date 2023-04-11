@@ -4,8 +4,12 @@ table {
 
   display: block;
   height: 725px;
+}
+
+.scrollable-table {
   overflow-y: scroll;
 }
+
 th {
   font-weight: 900;
   color: #685206;
