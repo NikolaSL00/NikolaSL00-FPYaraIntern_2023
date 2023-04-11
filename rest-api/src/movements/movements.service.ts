@@ -140,9 +140,14 @@ export class MovementsService {
     }
 
     if (destinationId !== null && !destinationWarehouse) {
-      console.log('err');
       throw new BadRequestException(
         `Destination warehouse with id ${destinationId} not found`,
+      );
+    }
+
+    if (sourceId === destinationId) {
+      throw new BadRequestException(
+        'Source and destination warehouse could not be same',
       );
     }
 
