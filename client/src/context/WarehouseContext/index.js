@@ -21,9 +21,7 @@ const warehouseReducer = (state, action) => {
 const getWarehouses = (dispatch) => async (callback) => {
   try {
     const response = await restApi.get('/warehouses');
-
     dispatch({ type: GET_ALL_WAREHOUSES, payload: response.data });
-
     if (callback) {
       callback();
     }

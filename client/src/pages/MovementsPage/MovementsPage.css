@@ -1,0 +1,34 @@
+.movement-page-container {
+  border: 1px solid red;
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  color: #685206;
+}
+
+.movement-page-warehouses-container {
+  border: 1px solid blue;
+  width: 100%;
+  height: 35%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+/* upper-body-components */
+.date-container-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3em;
+}
+
+.movement-page-products-container {
+  width: 100%;
+  height: 65%;
+}
