@@ -40,7 +40,7 @@ const MovementsPage = () => {
 
   useEffect(() => {
     setTransferError('');
-  }, [date, source, destination]);
+  }, [date, source, destination, transferProducts]);
 
   const onTransferClickHandler = async () => {
     const transferDate = dateFormatter(date);
