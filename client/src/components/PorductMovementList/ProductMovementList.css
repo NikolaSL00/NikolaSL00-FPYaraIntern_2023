@@ -1,0 +1,15 @@
+.products-list-el {
+  margin-bottom: 0.25em;
+}
+
+.list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.products-list {
+  text-align: center;
+}

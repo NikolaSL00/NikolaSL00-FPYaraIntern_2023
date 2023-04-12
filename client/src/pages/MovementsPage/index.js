@@ -2,12 +2,12 @@ import './MovementsPage.css';
 import { useState, useContext, useEffect } from 'react';
 
 import { HiArrowLongRight } from 'react-icons/hi2';
-import { GrClose } from 'react-icons/gr';
 import WarehouseMovementInput from '../../components/WarehousMovementInput';
 import DatePicker from '../../components/DatePicker';
 import ProductMovementInput from '../../components/ProductMovementInput';
 import Button from '../../components/common/Button';
 import Modal from '../../components/common/Modal';
+import ProductMovementList from '../../components/PorductMovementList';
 
 import { Context as WarehouseContext } from '../../context/WarehouseContext';
 import { dateFormatter } from '../../helpers/dateFormatter';
@@ -19,7 +19,6 @@ const MovementsPage = () => {
     state: { warehouses },
     getWarehouses,
   } = useContext(WarehouseContext);
-
   const [showModal, setShowModal] = useState(false);
   const [date, setDate] = useState('');
   const [source, setSource] = useState('null');
@@ -41,31 +40,11 @@ const MovementsPage = () => {
 
   useEffect(() => {
     setTransferError('');
-  }, [date, source, destination, transferProducts]);
-
-  const deleteListItemHandler = (product) => {
-    setTransferProducts((curr) =>
-      curr.filter((currProduct) => currProduct.id !== product.id)
-    );
-  };
-  const renderedProducts = transferProducts.map((product) => {
-    return (
-      <li className="products-list-el" key={product.id}>
-        <div className="list-item">
-          {' '}
-          <p>
-            {product.name} - {product.type} type - {product.quantity} pieces
-          </p>
-          <GrClose size={20} onClick={() => deleteListItemHandler(product)} />
-        </div>
-      </li>
-    );
-  });
-  const isDisabled =
-    (source === 'null' && destination === 'null') || date === '';
+  }, [date, source, destination]);
 
   const onTransferClickHandler = async () => {
     const transferDate = dateFormatter(date);
+
     const transfers = transferProducts.map((product) => ({
       productId: parseInt(product.id),
       quantity: parseInt(product.quantity),
@@ -90,6 +69,9 @@ const MovementsPage = () => {
       setTransferError(() => err.response.data.message);
     }
   };
+
+  const isDisabled =
+    (source === 'null' && destination === 'null') || date === '';
 
   return (
     <div className="movement-page-container">
@@ -117,14 +99,16 @@ const MovementsPage = () => {
           onChange={(e) => setDestination(e.target.value)}
         />
       </div>
+
       <div className="movement-page-products-container">
         <ProductMovementInput setTransferProducts={setTransferProducts} />
+
         {transferProducts.length > 0 && (
           <div className="movement-page-products-list-container">
-            <div className="movement-page-products-list-wrapper">
-              <h2>Products:</h2>
-              <ul className="products-list">{renderedProducts}</ul>
-            </div>
+            <ProductMovementList
+              transferProducts={transferProducts}
+              setTransferProducts={setTransferProducts}
+            />
             <div className="product-movements-btn-wrapper">
               <Button
                 onClick={onTransferClickHandler}
@@ -153,8 +137,5 @@ const MovementsPage = () => {
     </div>
   );
 };
-// {transferMessage && (
-//
-// )}
 
 export default MovementsPage;
