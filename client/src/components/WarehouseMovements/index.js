@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { restApi } from '../../api/restApi';
 import Modal from '../common/Modal';
 import Table from '../common/Table';
+import { Context as ProductContext } from '../../context/ProductContext';
 
 const configImports = [
   {
@@ -15,7 +16,11 @@ const configImports = [
   },
   {
     label: 'Product id',
-    render: (imp) => imp.productId,
+    render: (imp) => imp.product.id,
+  },
+  {
+    label: 'Product name',
+    render: (imp) => imp.product.name,
   },
   {
     label: 'Quantity',
@@ -35,7 +40,11 @@ const configExports = [
   },
   {
     label: 'Product id',
-    render: (exp) => exp.productId,
+    render: (exp) => exp.product.id,
+  },
+  {
+    label: 'Product name',
+    render: (exp) => exp.product.name,
   },
   {
     label: 'Quantity',
@@ -44,6 +53,9 @@ const configExports = [
 ];
 
 const WarehouseMovements = ({ onClose, warehouse }) => {
+  const {
+    state: { products },
+  } = useContext(ProductContext);
   const [imports, setImports] = useState([]);
   const [exports, setExports] = useState([]);
   const [error, setError] = useState('');
@@ -57,7 +69,7 @@ const WarehouseMovements = ({ onClose, warehouse }) => {
           sourceId: movement.sourceId,
           destinationId: movement.destinationId,
           date: movement.date,
-          productId: product.productId,
+          product: products.filter((prod) => prod.id === product.productId)[0],
           quantity: product.quantity,
         });
       }
