@@ -14,14 +14,14 @@ export class Movement {
   id: number;
 
   @ManyToOne(() => Warehouse, (warehouse) => warehouse.exports, {
-    onDelete: 'SET NULL',
     nullable: true,
+    onDelete: 'SET NULL',
   })
   source: Warehouse;
 
   @ManyToOne(() => Warehouse, (warehouse) => warehouse.imports, {
-    onDelete: 'SET NULL',
     nullable: true,
+    onDelete: 'SET NULL',
   })
   destination: Warehouse;
 

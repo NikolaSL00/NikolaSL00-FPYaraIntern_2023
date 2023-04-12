@@ -48,8 +48,6 @@ export class MovementsService {
             },
           },
         );
-        console.log(sourceWarehouse);
-        console.log(destinationWarehouse);
 
         this.validateWarehouseInput(
           reqMovement.sourceId,
@@ -59,12 +57,20 @@ export class MovementsService {
           user,
         );
 
-        const movement = queryRunner.manager.create(Movement, {
+        const parts = reqMovement.date.split('/');
+        const year = parts[2];
+        const month = parts[1].padStart(2, '0');
+        const day = parts[0].padStart(2, '0');
+        const isoDate = `${year}-${month}-${day}T00:00:00.000Z`;
+
+        let movement = queryRunner.manager.create(Movement, {
           source: sourceWarehouse,
           destination: destinationWarehouse,
-          date: reqMovement.date || new Date().toLocaleDateString(),
+          date: isoDate || new Date().toISOString(),
           products: [],
         });
+
+        movement = await queryRunner.manager.save(movement);
 
         await this.transferProducts(
           reqMovement.transfers,
@@ -108,7 +114,6 @@ export class MovementsService {
     destinationWarehouse: Warehouse,
     queryRunner: QueryRunner,
   ) {
-    await queryRunner.manager.save(movement);
     const products = await this.getTransferProducts(transfers, queryRunner);
     const productsVolume = await this.calculateProductsVolume(products);
 
@@ -141,7 +146,17 @@ export class MovementsService {
       movement.products.push(movementProduct);
     }
 
-    await queryRunner.manager.save(movement);
+    movement = await queryRunner.manager.save(movement);
+
+    let createdMovement = await queryRunner.manager.findOne(Movement, {
+      where: { id: movement.id },
+      relations: ['source', 'destination'],
+    });
+
+    createdMovement.destination = destinationWarehouse;
+    createdMovement.source = sourceWarehouse;
+    await queryRunner.manager.save(createdMovement);
+
     return movement;
   }
 

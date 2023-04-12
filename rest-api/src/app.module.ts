@@ -27,6 +27,7 @@ import { MovementProduct } from './junction-table/movement-product.entity';
       port: 5432,
       username: 'admin',
       password: 'admin',
+      // logging: true,
     }),
   ],
   controllers: [AppController],
