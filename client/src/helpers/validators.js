@@ -20,10 +20,25 @@ export function isNumeric(value, fieldName, setError) {
     return false;
   }
 
-  if (Number(value) === 0) {
-    setError(() => `${fieldName} can not be 0`);
+  if (Number(value) <= 0) {
+    setError(() => `${fieldName} can not be 0 or negative`);
     return false;
   }
+
+  return true;
+}
+
+export function isPositiveInteger(value, fieldName, setError) {
+  if (Number.isInteger(value)) {
+    setError(() => `${fieldName} should be whole number`);
+    return false;
+  }
+
+  if (Number(value) <= 0) {
+    setError(() => `${fieldName} can not be 0 or negative`);
+    return false;
+  }
+
   return true;
 }
 
