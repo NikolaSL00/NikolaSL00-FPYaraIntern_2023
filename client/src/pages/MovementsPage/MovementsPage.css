@@ -1,5 +1,4 @@
 .movement-page-container {
-  border: 1px solid red;
   height: 100%;
   width: 100%;
 
@@ -9,7 +8,8 @@
 }
 
 .movement-page-warehouses-container {
-  border: 1px solid blue;
+  margin-bottom: 1.5em;
+  border-bottom: 1px solid gray;
   width: 100%;
   height: 35%;
 
@@ -31,4 +31,55 @@
 .movement-page-products-container {
   width: 100%;
   height: 65%;
+}
+
+.movement-page-products-list-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.products-list {
+  text-align: center;
+}
+
+.products-list-el {
+  margin-bottom: 0.25em;
+}
+
+.product-movements-btn-wrapper {
+  margin: 29.05px 29.05px;
+}
+
+.btn-transfer {
+  width: 217px;
+  height: 50px;
+  background-color: green;
+}
+
+.btn-transfer:disabled,
+.btn-transfer[disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.transfer-error {
+  color: red;
+  width: 217px;
+  text-align: center;
+}
+
+.transfer-message {
+  color: green;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
 }
