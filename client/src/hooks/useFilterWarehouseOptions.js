@@ -10,7 +10,7 @@ export const useFilterWarehouseOptions = (warehouses, source, destination) => {
 
   useEffect(() => {
     filterWarehouseSourceOptions();
-  }, [source]);
+  }, [source, warehouses]);
 
   const filterWarehouseSourceOptions = () => {
     const options = warehouses.filter(
@@ -21,7 +21,7 @@ export const useFilterWarehouseOptions = (warehouses, source, destination) => {
 
   useEffect(() => {
     filterWarehouseDestinationOptions();
-  }, [destination]);
+  }, [destination, warehouses]);
 
   const filterWarehouseDestinationOptions = () => {
     const options = warehouses.filter(
