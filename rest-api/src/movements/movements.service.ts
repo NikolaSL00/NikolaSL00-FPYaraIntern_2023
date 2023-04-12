@@ -48,6 +48,8 @@ export class MovementsService {
             },
           },
         );
+        console.log(sourceWarehouse);
+        console.log(destinationWarehouse);
 
         this.validateWarehouseInput(
           reqMovement.sourceId,
@@ -110,7 +112,7 @@ export class MovementsService {
     const products = await this.getTransferProducts(transfers, queryRunner);
     const productsVolume = await this.calculateProductsVolume(products);
 
-    if (sourceWarehouse) {
+    if (sourceWarehouse !== null) {
       await this.processTransferSourceWarehouse(
         products,
         productsVolume,
@@ -119,7 +121,7 @@ export class MovementsService {
       );
     }
 
-    if (destinationWarehouse) {
+    if (destinationWarehouse !== null) {
       await this.processTransferDestinationWarehouse(
         products,
         productsVolume,
@@ -150,13 +152,13 @@ export class MovementsService {
     destinationWarehouse: Warehouse,
     user: User,
   ) {
-    if (sourceId !== null && !sourceWarehouse) {
+    if (sourceId !== -1 && !sourceWarehouse) {
       throw new BadRequestException(
         `Source warehouse with id ${sourceId} not found`,
       );
     }
 
-    if (destinationId !== null && !destinationWarehouse) {
+    if (destinationId !== -1 && !destinationWarehouse) {
       throw new BadRequestException(
         `Destination warehouse with id ${destinationId} not found`,
       );
@@ -224,7 +226,7 @@ export class MovementsService {
         sourceProdInfo[product.id] < quantity
       ) {
         throw new BadRequestException(
-          `Not enough quantity in warehouse named ${sourceWarehouse.name} of product ${product.name}`,
+          `Not enough quantity of product ${product.name} in warehouse named ${sourceWarehouse.name}`,
         );
       }
     }
