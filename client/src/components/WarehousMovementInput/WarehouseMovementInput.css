@@ -8,6 +8,12 @@
 .warehouse-movements-select {
   width: 217px;
   cursor: pointer;
+
+  text-align: center;
+  color: #685206;
+  background-color: #eaeff3;
+
+  border: 1px solid black;
 }
 
 .btn-movements-history {
@@ -24,8 +30,9 @@
 .movements-tables-wrapper {
   display: flex;
   flex-direction: row;
+
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .movements-table-wrapper {

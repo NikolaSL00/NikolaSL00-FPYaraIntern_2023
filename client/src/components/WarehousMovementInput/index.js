@@ -3,14 +3,17 @@ import { useState } from 'react';
 import Button from '../common/Button';
 
 import WarehouseMovements from '../WarehouseMovements';
+import Select from '../common/Select';
 
 const WarehouseMovementInput = ({
   title,
-  warehouses,
-  defaultOption,
-  value,
-  onChange,
+  warehouses, // all warehouses
+  defaultOption, // first option with null value
+  value, // useState value
+  onChange, // onChange setState
 }) => {
+  const [showModal, setShowModal] = useState(false);
+
   const renderOptions = warehouses.map((warehouse) => {
     return (
       <option key={warehouse.id} value={warehouse.id}>
@@ -18,7 +21,8 @@ const WarehouseMovementInput = ({
       </option>
     );
   });
-  const [showModal, setShowModal] = useState(false);
+
+  const defaultOptionNull = <option value="null">{defaultOption}</option>;
 
   const warehouse = warehouses.filter(
     (warehouse) => warehouse.id === parseInt(value)
@@ -51,18 +55,16 @@ const WarehouseMovementInput = ({
   };
 
   return (
-    <div className="warehouse-movement-input-wrapper">
-      <label>{title}</label>
-      <select
-        className="warehouse-movements-select"
-        value={value}
-        onChange={(e) => onChange(e)}
-      >
-        <option value="null">{defaultOption}</option>
-        {renderOptions}
-      </select>
-      <div>{value !== 'null' && renderDetails()}</div>
-    </div>
+    <Select
+      title={title}
+      defaultOption={defaultOptionNull}
+      options={renderOptions}
+      value={value}
+      onChange={onChange}
+      withDefaultOption={true}
+    >
+      {<div>{value !== 'null' && renderDetails()}</div>}
+    </Select>
   );
 };
 
