@@ -21,19 +21,20 @@ const authReducer = (state, action) => {
   }
 };
 
-const getUserIfCookieAvailable = (dispatch) => async (callback) => {
-  try {
-    const response = await restApi.get('/auth/whoami');
+const getUserIfCookieAvailable =
+  (dispatch) => async (callback, onNoCredentialsCallback) => {
+    try {
+      const response = await restApi.get('/auth/whoami');
 
-    dispatch({ type: SIGNIN, payload: response.data });
+      dispatch({ type: SIGNIN, payload: response.data });
 
-    if (callback) {
-      callback();
+      if (callback) {
+        callback();
+      }
+    } catch (err) {
+      onNoCredentialsCallback();
     }
-  } catch (err) {
-    // console.error(err);
-  }
-};
+  };
 const signup = (dispatch) => async (email, password, callback) => {
   try {
     const response = await restApi.post('/auth/signup', { email, password });

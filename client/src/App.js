@@ -23,9 +23,14 @@ const App = () => {
   const { getUserIfCookieAvailable } = useContext(AuthContext);
 
   useEffect(() => {
-    getUserIfCookieAvailable(() => {
-      navigate('/warehouses');
-    });
+    getUserIfCookieAvailable(
+      () => {
+        navigate('/warehouses');
+      },
+      () => {
+        navigate('/signin');
+      }
+    );
   }, []);
 
   return (
