@@ -70,6 +70,7 @@ export class WarehousesService {
       (acc: number, value: number) => acc + value,
       0,
     );
+
     if (
       updateWarehouseDto.type &&
       updateWarehouseDto.type !== warehouse.type &&
@@ -153,6 +154,12 @@ export class WarehousesService {
       }
     }
 
+    for (const [id, quantity] of Object.entries(productInfo)) {
+      if (quantity <= 0) {
+        delete productInfo[id];
+      }
+    }
+
     return productInfo;
   }
 
@@ -195,6 +202,12 @@ export class WarehousesService {
 
       if (exportProductInfo?.[key]) {
         productInfo[key] += exportProductInfo[key];
+      }
+    }
+
+    for (const [id, quantity] of Object.entries(productInfo)) {
+      if (quantity <= 0) {
+        delete productInfo[id];
       }
     }
 
