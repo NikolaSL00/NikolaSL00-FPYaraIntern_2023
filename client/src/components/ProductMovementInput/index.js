@@ -47,13 +47,18 @@ const ProductMovementInput = ({ source, setTransferProducts }) => {
   const product = warehouseProducts.filter(
     (product) => product.id === parseInt(productId)
   )[0];
-  const renderOptions = warehouseProducts.map((product) => {
-    return (
-      <option key={product.id} value={product.id}>
-        {product.name}
-      </option>
+  const renderOptions =
+    warehouseProducts.length > 0 ? (
+      warehouseProducts.map((product) => {
+        return (
+          <option key={product.id} value={product.id}>
+            {product.name}
+          </option>
+        );
+      })
+    ) : (
+      <option disabled>no products available</option>
     );
-  });
   const defaultOption = (
     <option value="null" disabled hidden>
       Select product
