@@ -6,28 +6,51 @@ import Input from '../../components/common/Input';
 import Button from '../common/Button';
 import { Context as ProductContext } from '../../context/ProductContext';
 import { isPositiveInteger } from '../../helpers/validators';
+import { restApi } from '../../api/restApi';
 
-const ProductMovementInput = ({ setTransferProducts }) => {
+const ProductMovementInput = ({ source, setTransferProducts }) => {
   const {
     state: { products },
     getProducts,
   } = useContext(ProductContext);
 
-  useEffect(() => {
-    getProducts();
-  }, []);
-
   const [productId, setProductId] = useState('null');
   const [quantity, setQuantity] = useState(0);
   const [quantityError, setQuantityError] = useState('');
+  const [warehouseProducts, setWarehouseProducts] = useState(products);
 
-  const product = products.filter(
+  useEffect(() => {
+    getProducts();
+    if (source !== 'null') {
+      (async () => {
+        const response = await restApi.get(`/warehouses/${source}/prodInfo`);
+        const warehouseProds = response.data.productsQuantity;
+
+        const matchingProducts = [];
+        for (const [id, quantity] of Object.entries(warehouseProds)) {
+          const product = products.filter(
+            (product) => product.id === parseInt(id)
+          )[0];
+          matchingProducts.push({ ...product, quantity });
+        }
+        setWarehouseProducts(() => matchingProducts);
+      })();
+    } else {
+      setWarehouseProducts(() => products);
+    }
+  }, [source]);
+
+  useEffect(() => {
+    setProductId('null');
+  }, [source]);
+
+  const product = warehouseProducts.filter(
     (product) => product.id === parseInt(productId)
   )[0];
-  const renderOptions = products.map((warehouse) => {
+  const renderOptions = warehouseProducts.map((product) => {
     return (
-      <option key={warehouse.id} value={warehouse.id}>
-        {warehouse.name}
+      <option key={product.id} value={product.id}>
+        {product.name}
       </option>
     );
   });
@@ -39,6 +62,11 @@ const ProductMovementInput = ({ setTransferProducts }) => {
   const renderDetails = () => {
     return (
       <>
+        {product.quantity && (
+          <p className="p-product-details">
+            Available quantity: {product.quantity}
+          </p>
+        )}
         <p className="p-product-details">Volume: {product.volume}</p>
         <p className="p-product-details">Type: {product.type}</p>
       </>

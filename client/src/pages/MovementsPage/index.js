@@ -79,7 +79,7 @@ const MovementsPage = () => {
         <WarehouseMovementInput
           title="From:"
           warehouses={filteredSource}
-          defaultOption="Unknown Source"
+          defaultOption="External Source"
           value={source}
           onChange={(e) => setSource(e.target.value)}
         />
@@ -94,14 +94,17 @@ const MovementsPage = () => {
         <WarehouseMovementInput
           title="To:"
           warehouses={filteredDestination}
-          defaultOption="Unknown Destination"
+          defaultOption="External Destination"
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
         />
       </div>
 
       <div className="movement-page-products-container">
-        <ProductMovementInput setTransferProducts={setTransferProducts} />
+        <ProductMovementInput
+          source={source}
+          setTransferProducts={setTransferProducts}
+        />
 
         {transferProducts.length > 0 && (
           <div className="movement-page-products-list-container">

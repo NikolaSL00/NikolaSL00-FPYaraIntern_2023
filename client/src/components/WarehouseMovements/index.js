@@ -8,7 +8,7 @@ import { Context as ProductContext } from '../../context/ProductContext';
 const configImports = [
   {
     label: 'Source',
-    render: (imp) => (imp.sourceId === null ? 'unknown source' : imp.sourceId),
+    render: (imp) => (imp.sourceId === null ? 'external source' : imp.sourceId),
   },
   {
     label: 'Date',
@@ -32,7 +32,7 @@ const configExports = [
   {
     label: 'Destination',
     render: (exp) =>
-      exp.destinationId === null ? 'unknown destination' : exp.destinationId,
+      exp.destinationId === null ? 'external destination' : exp.destinationId,
   },
   {
     label: 'Date',
