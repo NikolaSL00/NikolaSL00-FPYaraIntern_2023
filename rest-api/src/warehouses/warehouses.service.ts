@@ -65,7 +65,7 @@ export class WarehousesService {
       );
     }
 
-    const productInfo = await this.getCurrentProductInfo(id);
+    const productInfo = await this.getAllTimeProductInfo(id);
     const productsCount = Object.values(productInfo).reduce(
       (acc: number, value: number) => acc + value,
       0,
@@ -106,61 +106,6 @@ export class WarehousesService {
 
   async getByIdOrNull(id: number) {
     return this.warehouseRepo.findOne({ where: { id } });
-  }
-
-  async getCurrentProductInfo(id: number) {
-    const warehouse = await this.warehouseRepo.findOne({
-      where: { id },
-      relations: {
-        imports: { products: { movement: true, product: true } },
-        exports: { products: { movement: true, product: true } },
-      },
-    });
-
-    let importProductInfo = {};
-    warehouse.imports
-      .filter((imp) => imp.date <= new Date().toLocaleDateString())
-      .map((imp) =>
-        imp.products.reduce((acc, mov_prod) => {
-          if (acc[mov_prod.product.id]) {
-            acc[mov_prod.product.id] += mov_prod.quantity;
-          } else {
-            acc[mov_prod.product.id] = mov_prod.quantity;
-          }
-          return acc;
-        }, importProductInfo),
-      )[0];
-
-    let exportProductInfo = {};
-    warehouse.exports
-      .filter((exp) => exp.date <= new Date().toLocaleDateString())
-      .map((exp) =>
-        exp.products.reduce((acc, mov_prod) => {
-          if (acc[mov_prod.product.id]) {
-            acc[mov_prod.product.id] -= mov_prod.quantity;
-          } else {
-            acc[mov_prod.product.id] = -mov_prod.quantity;
-          }
-          return acc;
-        }, exportProductInfo),
-      )[0];
-
-    const productInfo = {};
-    for (const key in importProductInfo) {
-      productInfo[key] = importProductInfo[key];
-
-      if (exportProductInfo?.[key]) {
-        productInfo[key] += exportProductInfo[key];
-      }
-    }
-
-    for (const [id, quantity] of Object.entries(productInfo)) {
-      if (quantity <= 0) {
-        delete productInfo[id];
-      }
-    }
-
-    return productInfo;
   }
 
   async getAllTimeProductInfo(id: number) {
