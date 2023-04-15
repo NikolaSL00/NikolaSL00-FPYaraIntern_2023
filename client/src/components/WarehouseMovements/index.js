@@ -7,16 +7,12 @@ import { Context as ProductContext } from '../../context/ProductContext';
 
 const configImports = [
   {
-    label: 'Source',
+    label: 'Source name',
     render: (imp) => (imp.sourceId === null ? 'external source' : imp.sourceId),
   },
   {
     label: 'Date',
     render: (imp) => imp.date,
-  },
-  {
-    label: 'Product id',
-    render: (imp) => imp.product.id,
   },
   {
     label: 'Product name',
@@ -30,17 +26,13 @@ const configImports = [
 
 const configExports = [
   {
-    label: 'Destination',
+    label: 'Destination name',
     render: (exp) =>
       exp.destinationId === null ? 'external destination' : exp.destinationId,
   },
   {
     label: 'Date',
     render: (exp) => exp.date,
-  },
-  {
-    label: 'Product id',
-    render: (exp) => exp.product.id,
   },
   {
     label: 'Product name',
@@ -104,7 +96,7 @@ const WarehouseMovements = ({ onClose, warehouse }) => {
           <Table
             data={imports}
             config={configImports}
-            keyFn={(movement) => `${movement.id}${movement.productId}`}
+            keyFn={(movement) => `${movement.id}${movement.product.id}`}
             isScrollable={false}
           />
         </div>
@@ -120,7 +112,9 @@ const WarehouseMovements = ({ onClose, warehouse }) => {
           <Table
             data={exports}
             config={configExports}
-            keyFn={(movement) => `${movement.id}${movement.productId}`}
+            keyFn={(movement) =>
+              `${movement.id}${movement.product.name}${movement.product.id}`
+            }
             isScrollable={false}
           />
         </div>
