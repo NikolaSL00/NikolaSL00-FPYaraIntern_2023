@@ -17,6 +17,15 @@ export class GetMovementsDTO {
   sourceId: number;
 
   @Transform(({ obj }) => {
+    if (!obj.source) {
+      return 'external source';
+    }
+    return obj.source.name;
+  })
+  @Expose()
+  sourceName: string;
+
+  @Transform(({ obj }) => {
     if (!obj.destination) {
       return null;
     }
@@ -24,6 +33,15 @@ export class GetMovementsDTO {
   })
   @Expose()
   destinationId: number;
+
+  @Transform(({ obj }) => {
+    if (!obj.destination) {
+      return 'external destination';
+    }
+    return obj.destination.name;
+  })
+  @Expose()
+  destinationName: string;
 
   @Transform(({ obj }) => {
     const final = [];

@@ -20,7 +20,6 @@ const ProductMovementInput = ({ source, setTransferProducts }) => {
   const [warehouseProducts, setWarehouseProducts] = useState(products);
 
   useEffect(() => {
-    console.log('getting products');
     getProducts();
     if (source !== 'null') {
       (async () => {

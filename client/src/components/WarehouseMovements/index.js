@@ -8,7 +8,7 @@ import { Context as ProductContext } from '../../context/ProductContext';
 const configImports = [
   {
     label: 'Source name',
-    render: (imp) => (imp.sourceId === null ? 'external source' : imp.sourceId),
+    render: (imp) => imp.sourceName,
   },
   {
     label: 'Date',
@@ -27,8 +27,7 @@ const configImports = [
 const configExports = [
   {
     label: 'Destination name',
-    render: (exp) =>
-      exp.destinationId === null ? 'external destination' : exp.destinationId,
+    render: (exp) => exp.destinationName,
   },
   {
     label: 'Date',
@@ -60,6 +59,8 @@ const WarehouseMovements = ({ onClose, warehouse }) => {
           id: movement.id,
           sourceId: movement.sourceId,
           destinationId: movement.destinationId,
+          sourceName: movement.sourceName,
+          destinationName: movement.destinationName,
           date: movement.date,
           product: products.filter((prod) => prod.id === product.productId)[0],
           quantity: product.quantity,
