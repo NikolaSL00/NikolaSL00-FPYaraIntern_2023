@@ -1,7 +1,9 @@
 import './ProductForm.css';
 import { useState, useContext, useEffect } from 'react';
 
-import Form from '../common/Form';
+import Select from '../common/Select';
+import Button from '../common/Button';
+import Input from '../common/Input';
 import { Context as ProductContext } from '../../context/ProductContext';
 import { isNumeric, isProductOrWarehouseType } from '../../helpers/validators';
 
@@ -14,7 +16,11 @@ const ProductForm = () => {
   const [price, setPrice] = useState('');
   const [type, setType] = useState('');
   const [error, setError] = useState('');
+  useEffect(() => {
+    setError(() => state.errorMessage);
+  }, [state.errorMessage]);
 
+  const typeOptions = ['normal', 'hazardous'];
   const inputs = [
     {
       type: 'text',
@@ -51,19 +57,7 @@ const ProductForm = () => {
       value: price,
       onChange: setPrice,
     },
-    {
-      type: 'text',
-      text: 'Type',
-      required: true,
-      value: type,
-      onChange: setType,
-    },
   ];
-
-  useEffect(() => {
-    setError(() => state.errorMessage);
-  }, [state.errorMessage]);
-
   const resetFormValues = () => {
     setName('');
     setWidth('');
@@ -72,7 +66,6 @@ const ProductForm = () => {
     setPrice('');
     setType('');
   };
-
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -93,16 +86,57 @@ const ProductForm = () => {
       resetFormValues();
     });
   };
-
+  const renderedInputs = inputs.map((input, index) => {
+    const autofocus = index === 0;
+    return (
+      <Input
+        autoFocus={autofocus}
+        key={input.text}
+        type={input.type}
+        text={input.text}
+        value={input.value}
+        required={input.required}
+        onChange={(e) => input.onChange(e.target.value)}
+      />
+    );
+  });
+  const renderOptions = typeOptions.map((option) => {
+    return (
+      <option key={option} value={option}>
+        {option}
+      </option>
+    );
+  });
+  const defaultOptionNull = (
+    <option value="" hidden>
+      Select product type
+    </option>
+  );
   return (
-    <Form
-      className="align-content-center"
-      inputs={inputs}
-      title="Add Product"
-      btnText="Add"
-      error={error}
-      onSubmit={onSubmit}
-    />
+    <div className="align-content-center">
+      <h3>Add product</h3>
+      <form className="add-product-form" onSubmit={onSubmit}>
+        {renderedInputs}
+        <Select
+          className="select-add-product"
+          title="Product Type"
+          options={renderOptions}
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          defaultOption={defaultOptionNull}
+          withDefaultOption={true}
+          isRequired={true}
+        />
+        {error && (
+          <div className="auth-form-error-container">
+            <p className="auth-form-error">{error}</p>
+          </div>
+        )}
+        <div className="add-product-btn-wrapper">
+          <Button className="add-product-btn">Add product</Button>
+        </div>
+      </form>
+    </div>
   );
 };
 

@@ -1,4 +1,29 @@
 .align-content-center {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-product-title {
+  font-size: larger;
+}
+
+.add-product-form {
+  width: 50%;
+}
+
+.add-product-btn-wrapper {
+  display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.add-product-btn {
+  width: 55%;
+}
+
+.select-add-product {
+  height: 75px !important;
 }
