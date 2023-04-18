@@ -14,7 +14,7 @@ async function bootstrap() {
   app.use(
     cookieSession({
       keys: ['asdfasfd'],
-      maxAge: 15 * 60 * 1000, // 15 min
+      maxAge: 15 * 60 * 1000 * 8, // 15 min // * 8
     }),
   );
 
