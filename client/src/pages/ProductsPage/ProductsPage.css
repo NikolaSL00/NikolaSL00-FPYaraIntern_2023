@@ -7,7 +7,7 @@
 }
 
 .table-searchbar-container {
-  width: 45%;
+  width: 55%;
   height: 100%;
 
   display: flex;
@@ -16,9 +16,8 @@
 }
 
 .form-add-product-container {
-  width: 55%;
+  width: 45%;
   height: 100%;
-  margin-top: -6em;
 }
 
 .not-found-div {
