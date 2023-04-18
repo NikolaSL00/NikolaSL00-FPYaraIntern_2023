@@ -1,3 +1,4 @@
+import './Select.css';
 const Select = ({
   title,
   value,
@@ -7,11 +8,15 @@ const Select = ({
   withDefaultOption,
   defaultOption,
   isRequired,
+  className,
 }) => {
-  console.log(isRequired);
   return (
-    <div className="warehouse-movement-input-wrapper">
-      <label>{title}</label>
+    <div
+      className={`warehouse-movement-input-wrapper ${
+        className ? className : ''
+      }`}
+    >
+      <label className="select-label">{title}</label>
       <select
         required={isRequired}
         className="warehouse-movements-select"
