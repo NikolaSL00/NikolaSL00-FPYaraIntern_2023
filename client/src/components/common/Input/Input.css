@@ -20,13 +20,13 @@
 .user-input-wrp .floating-label {
   position: absolute;
   pointer-events: none;
-  top: 18px;
+  top: 16px;
   left: 10px;
   transition: 0.2s ease all;
 }
 .user-input-wrp input:focus ~ .floating-label,
 .user-input-wrp input:not(:focus):valid ~ .floating-label {
-  top: 0px;
+  top: -5px;
   left: 10px;
   font-size: 14px;
   opacity: 1;
