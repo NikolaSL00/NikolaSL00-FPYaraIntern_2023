@@ -1,5 +1,3 @@
-import './WarehouseForm.css';
-
 import { useNavigate } from 'react-router';
 import Button from '../common/Button';
 import Input from '../common/Input';
