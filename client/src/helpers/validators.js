@@ -29,16 +29,11 @@ export function isNumeric(value, fieldName, setError) {
 }
 
 export function isPositiveInteger(value, fieldName, setError) {
-  if (!Number.isInteger(Number(value))) {
-    setError(() => `${fieldName} should be whole number`);
+  const regex = new RegExp(/^[1-9]+\d+$/);
+  if (!regex.test(value)) {
+    setError(() => `${fieldName} should be positive whole number`);
     return false;
   }
-
-  if (Number(value) <= 0) {
-    setError(() => `${fieldName} can not be 0 or negative`);
-    return false;
-  }
-
   return true;
 }
 
