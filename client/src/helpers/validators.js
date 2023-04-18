@@ -29,7 +29,7 @@ export function isNumeric(value, fieldName, setError) {
 }
 
 export function isPositiveInteger(value, fieldName, setError) {
-  if (Number.isInteger(value)) {
+  if (!Number.isInteger(Number(value))) {
     setError(() => `${fieldName} should be whole number`);
     return false;
   }

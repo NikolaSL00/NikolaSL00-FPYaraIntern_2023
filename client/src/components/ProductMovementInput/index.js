@@ -15,7 +15,7 @@ const ProductMovementInput = ({ source, setTransferProducts }) => {
   } = useContext(ProductContext);
 
   const [productId, setProductId] = useState('null');
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState('');
   const [quantityError, setQuantityError] = useState('');
   const [warehouseProducts, setWarehouseProducts] = useState(products);
 
@@ -98,7 +98,7 @@ const ProductMovementInput = ({ source, setTransferProducts }) => {
         { id: productId, quantity, name: product.name, type: product.type },
       ];
     });
-    setQuantity(0);
+    setQuantity('');
     setProductId('null');
   };
 
