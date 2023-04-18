@@ -6,11 +6,14 @@ const Select = ({
   onChange,
   withDefaultOption,
   defaultOption,
+  isRequired,
 }) => {
+  console.log(isRequired);
   return (
     <div className="warehouse-movement-input-wrapper">
       <label>{title}</label>
       <select
+        required={isRequired}
         className="warehouse-movements-select"
         value={value}
         onChange={(e) => onChange(e)}

@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from 'react';
 
 import { Context as WarehouseContext } from '../../context/WarehouseContext';
-import { isNumeric, isProductOrWarehouseType } from '../../helpers/validators';
+import { isNumeric } from '../../helpers/validators';
 import Modal from '../common/Modal';
-import Form from '../common/Form';
+import WarehouseForm from '../WarehouseForm';
 
 const WarehouseAddForm = ({ onClose }) => {
   const { state, addWarehouse, clearErrorMessage } =
@@ -37,15 +37,12 @@ const WarehouseAddForm = ({ onClose }) => {
       value: volumeLimit,
       onChange: setVolumeLimit,
     },
-
-    {
-      type: 'text',
-      text: 'Type',
-      required: true,
-      value: type,
-      onChange: setType,
-    },
   ];
+  const selectOptions = {
+    options: ['normal', 'hazardous'],
+    value: type,
+    onChange: (e) => setType(e.target.value),
+  };
 
   const resetFormValues = () => {
     setName('');
@@ -53,16 +50,12 @@ const WarehouseAddForm = ({ onClose }) => {
     setVolumeLimit('');
     setType('');
   };
-
   const onSubmit = (e) => {
     e.preventDefault();
 
     setError(() => '');
 
-    if (
-      !isNumeric(volumeLimit, 'Volume Limit', setError) ||
-      !isProductOrWarehouseType(type, 'Warehouse Type', setError)
-    ) {
+    if (!isNumeric(volumeLimit, 'Volume Limit', setError)) {
       return;
     }
 
@@ -79,8 +72,9 @@ const WarehouseAddForm = ({ onClose }) => {
 
   return (
     <Modal onClose={onClose} onSubmit={addWarehouse}>
-      <Form
+      <WarehouseForm
         inputs={inputs}
+        selectOptions={selectOptions}
         title="Add Warehouse"
         btnText="Add"
         error={error}
