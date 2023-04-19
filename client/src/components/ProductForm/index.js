@@ -16,6 +16,8 @@ const ProductForm = () => {
   const [price, setPrice] = useState('');
   const [type, setType] = useState('');
   const [error, setError] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
+
   useEffect(() => {
     setError(() => state.errorMessage);
   }, [state.errorMessage]);
@@ -82,8 +84,10 @@ const ProductForm = () => {
     }
 
     clearErrorMessage();
+    setIsDisabled(true);
     addProduct(name.trim(), width, height, length, price, type, () => {
       resetFormValues();
+      setIsDisabled(false);
     });
   };
   const renderedInputs = inputs.map((input, index) => {
@@ -133,7 +137,9 @@ const ProductForm = () => {
           </div>
         )}
         <div className="add-product-btn-wrapper">
-          <Button className="add-product-btn">Add product</Button>
+          <Button className="add-product-btn" disabled={isDisabled}>
+            Add product
+          </Button>
         </div>
       </form>
     </div>
