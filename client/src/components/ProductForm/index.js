@@ -1,62 +1,63 @@
-import './ProductForm.css';
-import { useState, useContext, useEffect } from 'react';
+import "./ProductForm.css";
+import { useState, useContext, useEffect } from "react";
 
-import Form from '../common/Form';
-import { Context as ProductContext } from '../../context/ProductContext';
-import { isNumeric, isProductOrWarehouseType } from '../../helpers/validators';
+import Form from "../common/Form";
+import { Context as ProductContext } from "../../context/ProductContext";
+import { isNumeric, isProductOrWarehouseType } from "../../helpers/validators";
 
 const ProductForm = () => {
   const { state, addProduct, clearErrorMessage } = useContext(ProductContext);
-  const [name, setName] = useState('');
-  const [width, setWidth] = useState('');
-  const [height, setHeight] = useState('');
-  const [length, setLength] = useState('');
-  const [price, setPrice] = useState('');
-  const [type, setType] = useState('');
-  const [error, setError] = useState('');
+  const [name, setName] = useState("");
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+  const [length, setLength] = useState("");
+  const [price, setPrice] = useState("");
+  const [type, setType] = useState("");
+  const [error, setError] = useState("");
 
   const inputs = [
     {
-      type: 'text',
-      text: 'Name',
+      type: "text",
+      text: "Name",
       required: true,
       value: name,
       onChange: setName,
     },
     {
-      type: 'number',
-      text: 'Width',
+      type: "number",
+      text: "Width",
       required: true,
       value: width,
       onChange: setWidth,
     },
     {
-      type: 'number',
-      text: 'Height',
+      type: "number",
+      text: "Height",
       required: true,
       value: height,
       onChange: setHeight,
     },
     {
-      type: 'number',
-      text: 'Length',
+      type: "number",
+      text: "Length",
       required: true,
       value: length,
       onChange: setLength,
     },
     {
-      type: 'number',
-      text: 'Price',
+      type: "number",
+      text: "Price",
       required: true,
       value: price,
       onChange: setPrice,
     },
     {
-      type: 'text',
-      text: 'Type',
+      type: "select",
+      text: "Type",
       required: true,
       value: type,
       onChange: setType,
+      options: ["normal", "hazardous"],
     },
   ];
 
@@ -65,25 +66,25 @@ const ProductForm = () => {
   }, [state.errorMessage]);
 
   const resetFormValues = () => {
-    setName('');
-    setWidth('');
-    setHeight('');
-    setLength('');
-    setPrice('');
-    setType('');
+    setName("");
+    setWidth("");
+    setHeight("");
+    setLength("");
+    setPrice("");
+    setType("");
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    setError(() => '');
+    setError(() => "");
 
     if (
-      !isNumeric(width, 'Width', setError) ||
-      !isNumeric(height, 'Height', setError) ||
-      !isNumeric(length, 'Length', setError) ||
-      !isNumeric(price, 'Price', setError) ||
-      !isProductOrWarehouseType(type, 'Product Type', setError)
+      !isNumeric(width, "Width", setError) ||
+      !isNumeric(height, "Height", setError) ||
+      !isNumeric(length, "Length", setError) ||
+      !isNumeric(price, "Price", setError) ||
+      !isProductOrWarehouseType(type, "Product Type", setError)
     ) {
       return;
     }

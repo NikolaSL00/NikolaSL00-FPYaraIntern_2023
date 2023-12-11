@@ -1,9 +1,9 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from "react";
 
-import { Context as WarehouseContext } from '../../context/WarehouseContext';
-import { isNumeric, isProductOrWarehouseType } from '../../helpers/validators';
-import Modal from '../common/Modal';
-import Form from '../common/Form';
+import { Context as WarehouseContext } from "../../context/WarehouseContext";
+import { isNumeric, isProductOrWarehouseType } from "../../helpers/validators";
+import Modal from "../common/Modal";
+import Form from "../common/Form";
 
 const WarehouseUpdateForm = ({ warehouse, onClose }) => {
   const { state, updateWarehouse, clearErrorMessage } =
@@ -14,7 +14,7 @@ const WarehouseUpdateForm = ({ warehouse, onClose }) => {
     parseFloat(warehouse.volumeLimit)
   );
   const [type, setType] = useState(warehouse.type);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const { id } = warehouse;
 
@@ -24,48 +24,49 @@ const WarehouseUpdateForm = ({ warehouse, onClose }) => {
 
   const inputs = [
     {
-      type: 'text',
-      text: 'Name',
+      type: "text",
+      text: "Name",
       required: true,
       value: name,
       onChange: setName,
     },
     {
-      type: 'text',
-      text: 'Address',
+      type: "text",
+      text: "Address",
       required: true,
       value: address,
       onChange: setAddress,
     },
     {
-      type: 'number',
-      text: 'Volume Limit',
+      type: "number",
+      text: "Volume Limit",
       required: true,
       value: volumeLimit,
       onChange: setVolumeLimit,
     },
 
     {
-      type: 'text',
-      text: 'Type',
+      type: "select",
+      text: "Type",
       required: true,
       value: type,
       onChange: setType,
+      options: ["normal", "hazardous"],
     },
   ];
   const resetFormValues = () => {
-    setName('');
-    setAddress('');
-    setVolumeLimit('');
-    setType('');
+    setName("");
+    setAddress("");
+    setVolumeLimit("");
+    setType("");
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    setError(() => '');
+    setError(() => "");
 
     if (
-      !isNumeric(volumeLimit, 'Volume Limit', setError) ||
-      !isProductOrWarehouseType(type, 'Warehouse Type', setError)
+      !isNumeric(volumeLimit, "Volume Limit", setError) ||
+      !isProductOrWarehouseType(type, "Warehouse Type", setError)
     ) {
       return;
     }

@@ -58,3 +58,13 @@
   font-weight: 500;
   margin: 0 0 0.5em 0;
 }
+
+.type-selection {
+  margin-bottom: 1.5rem;
+}
+
+.select-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}

@@ -1,7 +1,7 @@
-import './Form.css';
-import { useNavigate } from 'react-router';
-import Button from '../Button';
-import Input from '../Input';
+import "./Form.css";
+import { useNavigate } from "react-router";
+import Button from "../Button";
+import Input from "../Input";
 
 const Form = ({
   className,
@@ -16,6 +16,22 @@ const Form = ({
   const navigate = useNavigate();
   const renderedInputs = inputs.map((input, index) => {
     const autofocus = index === 0;
+    if (input.type === "select") {
+      return (
+        <div className="select-container">
+          <label>{input.text}</label>
+          <select
+            className="type-selection"
+            onChange={(e) => input.onChange(e.target.value)}
+            value={input.value}
+          >
+            {input.options.map((option) => (
+              <option value={option}>{option}</option>
+            ))}
+          </select>
+        </div>
+      );
+    }
     return (
       <Input
         autoFocus={autofocus}
