@@ -4,16 +4,11 @@
 
   display: flex;
   justify-content: center;
-  align-items: self-start;
 }
 
 .auth-form-container {
-  /* top: 50%; */
-  /* left: 50%; */
   width: 30em;
   height: 30em;
-  /* margin-top: -15em; */
-  /* margin-left: -15em; */
   position: fixed;
 
   display: flex;

@@ -12,7 +12,7 @@ const WarehouseAddForm = ({ onClose }) => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [volumeLimit, setVolumeLimit] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState("normal");
   const [error, setError] = useState("");
 
   const inputs = [

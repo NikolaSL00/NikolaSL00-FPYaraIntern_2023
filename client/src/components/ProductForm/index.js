@@ -12,7 +12,7 @@ const ProductForm = () => {
   const [height, setHeight] = useState("");
   const [length, setLength] = useState("");
   const [price, setPrice] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState("normal");
   const [error, setError] = useState("");
 
   const inputs = [

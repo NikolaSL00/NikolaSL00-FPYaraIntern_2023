@@ -14,9 +14,9 @@
 
 .modal-content {
   position: fixed;
-  top: 10rem;
+  top: 5rem;
   right: 10rem;
-  bottom: 10rem;
+  bottom: 5rem;
   left: 10rem;
   padding: 2.5rem;
   background-color: #eaeff3;
