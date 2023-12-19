@@ -58,10 +58,13 @@ export class MovementsService {
         );
 
         const parts = reqMovement.date.split('/');
-        const year = parts[2];
-        const month = parts[1].padStart(2, '0');
-        const day = parts[0].padStart(2, '0');
-        const isoDate = `${year}-${month}-${day}T00:00:00.000Z`;
+        console.log(parts);
+        const month = parseInt(parts[0], 10) - 1;
+        const day = parseInt(parts[1], 10) + 1;
+        const year = parseInt(parts[2], 10);
+
+        const isoDate = new Date(year, month, day).toISOString();
+        console.log(isoDate);
 
         let movement = queryRunner.manager.create(Movement, {
           source: sourceWarehouse,
@@ -316,7 +319,11 @@ export class MovementsService {
 
     let importProductInfo = {};
     warehouse.imports
-      .filter((imp) => imp.date <= new Date().toLocaleDateString())
+      .filter(
+        (imp) =>
+          new Date(imp.date).toLocaleDateString() <=
+          new Date().toLocaleDateString(),
+      )
       .map((imp) =>
         imp.products.reduce((acc, mov_prod) => {
           if (acc[mov_prod.product.id]) {
@@ -330,7 +337,11 @@ export class MovementsService {
 
     let exportProductInfo = {};
     warehouse.exports
-      .filter((exp) => exp.date <= new Date().toLocaleDateString())
+      .filter(
+        (exp) =>
+          new Date(exp.date).toLocaleDateString() <=
+          new Date().toLocaleDateString(),
+      )
       .map((exp) =>
         exp.products.reduce((acc, mov_prod) => {
           if (acc[mov_prod.product.id]) {
