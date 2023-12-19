@@ -9,7 +9,7 @@
 .auth-form-container {
   width: 30em;
   height: 30em;
-  position: fixed;
+  position: fixed; /* margin-left: -15em; */
 
   display: flex;
   flex-direction: column;

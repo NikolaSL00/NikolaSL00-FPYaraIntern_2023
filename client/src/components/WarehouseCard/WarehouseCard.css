@@ -10,6 +10,10 @@
   align-items: center;
 }
 
+.card:hover {
+  border-radius: 0.5rem;
+}
+
 .card-controls {
   width: 100%;
   display: flex;
